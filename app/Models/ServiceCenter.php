@@ -24,4 +24,11 @@ class ServiceCenter extends Model
     {
         return $this->belongsTo(User::class, 'users_id');
     }
+
+    public function vehicles()
+    {
+        return $this->hasMany(Vehicle::class, 'service_center_id');
+    }
+
+
 }
