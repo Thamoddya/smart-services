@@ -1,0 +1,27 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class ServiceCenter extends Model
+{
+    use HasFactory;
+
+    protected $table = 'service_center';
+
+    protected $fillable = [
+        'name',
+        'address',
+        'mobile',
+        'email',
+        'total_access_vehicles',
+        'users_id',
+    ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'users_id');
+    }
+}
