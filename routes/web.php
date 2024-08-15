@@ -1,18 +1,15 @@
 <?php
 
+use App\Http\Controllers\Route\RouterController;
 use Illuminate\Support\Facades\Route;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
-|
-*/
-
 Route::get('/', function () {
-    return view('welcome');
+    return view('Login');
+});
+
+Route::middleware(['auth'])->group(function () {
+
+    Route::prefix('superAdmin')->group(function () {
+        Route::get('/', [RouterController::class, 'SuperAdminIndex'])->name('superAdmin.index');
+    });
 });
