@@ -1,4 +1,4 @@
-<ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+<ul class="navbar-nav bg-gradient-info animated--fade-in sidebar sidebar-dark accordion" id="accordionSidebar">
 
     <!-- Sidebar - Brand -->
     <a class="sidebar-brand d-flex align-items-center justify-content-center" href="#">
@@ -30,7 +30,12 @@
     <li class="nav-item {{ Route::currentRouteName() == 'superAdmin.serviceCenters' ? 'active' : '' }}">
         <a class="nav-link" href="{{ route('superAdmin.serviceCenters') }}">
             <i class="fas fa-fw fa-cog"></i>
-            <span>Service Center</span></a>
+            <span>Service Centers</span></a>
+    </li>
+    <li class="nav-item {{ Route::currentRouteName() == 'superAdmin.vehicles' ? 'active' : '' }}">
+        <a class="nav-link" href="{{ route('superAdmin.vehicles') }}">
+            <i class="fas fa-fw fa-car"></i>
+            <span>Vehicles</span></a>
     </li>
 
     {{-- <!-- Nav Item - Utilities Collapse Menu -->

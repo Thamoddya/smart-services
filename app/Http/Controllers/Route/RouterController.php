@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Route;
 use App\Http\Controllers\Controller;
 use App\Models\ServiceCenter;
 use App\Models\User;
+use App\Models\Vehicle;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -104,6 +105,17 @@ class RouterController extends Controller
         ]));
     }
 
+    public function SuperAdminVehicles()
+    {
+        $userData = Auth::user();
+        $vehicles = Vehicle::with('serviceCenter')->get();
+        $vehicleCount = Vehicle::count();
+        return view("superAdmin.vehicles", compact([
+            'userData',
+            'vehicles',
+            'vehicleCount'
+        ]));
+    }
 
 
 
