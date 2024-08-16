@@ -20,7 +20,7 @@
                             </div>
                             <div class="row no-gutters align-items-center">
                                 <div class="col-auto">
-                                    <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">29</div>
+                                    <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">{{ $serviceCenterCount }}</div>
                                 </div>
 
                             </div>
@@ -153,17 +153,12 @@
                                 <td>{{ $serviceCenter->mobile }}</td>
                                 <td>{{ $serviceCenter->email }}</td>
                                 <td>{{ $serviceCenter->total_access_vehicles }}</td>
-                                <td>Rs.{{ $serviceCenter->earnings }}</td>
+                                <td>Rs.{{ $serviceCenter->totalRevenue() }}</td>
                                 <td>
-                                    <a href="#" class="btn btn-primary btn-circle btn-sm">
-                                        <i class="fas fa-eye text-white"></i>
-                                    </a>
-                                    <a href="#" class="btn btn-success btn-circle btn-sm">
-                                        <i class="fas fa-edit text-white"></i>
-                                    </a>
-                                    <a href="#" class="btn btn-danger btn-circle btn-sm">
-                                        <i class="fas fa-trash text-white"></i>
-                                    </a>
+                                    <button onclick="POPUP_editServiceCenterModal({{ $serviceCenter->id }});"
+                                        class="btn btn-primary btn-sm">
+                                        EDIT
+                                    </button>
                                 </td>
                             </tr>
                         @endforeach
@@ -310,7 +305,150 @@
         </div>
     </div>
 
+
+    {{-- Edit Service Center Modal --}}
+    <div class="modal  fade" id="editServiceCenterModal" tabindex="-1" role="dialog"
+        aria-labelledby="editServiceCenterModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editServiceCenterModalLabel">Edit Service Center</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body
+                    text-left">
+                    <div>
+                        {{-- Service Center ID --}}
+                        <input type="hidden" id="EditserviceCenterId">
+                        {{-- Service Center Name --}}
+                        <div class="form-group row" id="editCenterName-group">
+                            <label for="editCenterName" class="col-sm-3 col-form-label">Service Center Name</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" id="editCenterName"
+                                    placeholder="Service Center Name">
+                                <!-- Error message will be appended here -->
+                            </div>
+                        </div>
+                        {{-- Mobile --}}
+                        <div class="form-group row" id="editCenterMobile-group">
+                            <label for="editCenterMobile" class="col-sm-3 col-form-label">Mobile</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" id="editCenterMobile" placeholder="Mobile">
+                                <!-- Error message will be appended here -->
+                            </div>
+                        </div>
+
+                        {{-- Email --}}
+                        <div class="form-group row" id="editCenterEmail-group">
+                            <label for="editCenterEmail" class="col-sm-3 col-form-label">Email</label>
+                            <div class="col-sm-9">
+                                <input type="email" class="form-control" id="editCenterEmail" placeholder="Email">
+                                <!-- Error message will be appended here -->
+                            </div>
+                        </div>
+                        {{-- Address --}}
+                        <div class="form-group
+                            row" id="editCenterAddress-group">
+                            <label for="editCenterAddress" class="col-sm-3 col-form-label">Address</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" id="editCenterAddress" placeholder="Address">
+                                <!-- Error message will be appended here -->
+                            </div>
+                        </div>
+                        {{-- total_access_vehicles count --}}
+                        <div class="form-group row" id="editTotal_access_vehicles-group">
+                            <label for="editTotal_access_vehicles" class="col-sm-3 col-form-label">Total Access
+                                Vehicles</label>
+                            <div class="col-sm-9">
+                                <input type="number" class="form-control" id="editTotal_access_vehicles"
+                                    placeholder="Total Access Vehicles">
+                                <!-- Error message will be appended here -->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary" onclick="UpdateServiceCenter();">Save changes</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
     <script>
+        function UpdateServiceCenter() {
+            var serviceCenterId = $('#EditserviceCenterId').val();
+            var editCenterName = $('#editCenterName').val();
+            var editCenterMobile = $('#editCenterMobile').val();
+            var editCenterEmail = $('#editCenterEmail').val();
+            var editCenterAddress = $('#editCenterAddress').val();
+            var editTotal_access_vehicles = $('#editTotal_access_vehicles').val();
+
+            $.ajax({
+                url: '{{ route('update-service-center') }}',
+                type: 'POST',
+                data: {
+                    serviceCenterId: serviceCenterId,
+                    editCenterName: editCenterName,
+                    editCenterMobile: editCenterMobile,
+                    editCenterEmail: editCenterEmail,
+                    editCenterAddress: editCenterAddress,
+                    editTotal_access_vehicles: editTotal_access_vehicles
+                },
+                success: function(response) {
+                    if (response.status === 'success') {
+                        window.location.reload();
+                    } else {
+                        // Handle validation errors
+                        displayServicecenterErrors(response.errors);
+                    }
+                },
+                error: function(xhr) {
+                    // Handle server errors
+                    alert('An error occurred: ' + xhr.responseJSON.message);
+                }
+            });
+        }
+
+
+        function POPUP_editServiceCenterModal(serviceCenterId) {
+
+            $('#editCenterName').val(null);
+            $('#editCenterMobile').val(null);
+            $('#editCenterEmail').val(null);
+            $('#editCenterAddress').val(null);
+            $('#editTotal_access_vehicles').val(null);
+            $('#EditserviceCenterId').val(null);
+            $.ajax({
+                url: '{{ route('get-service-center') }}',
+                type: 'POST',
+                data: {
+                    serviceCenterId: serviceCenterId
+                },
+                success: function(response) {
+                    if (response.status === 'success') {
+                        var serviceCenter = response.data;
+                        $('#editCenterName').val(serviceCenter.name);
+                        $('#editCenterMobile').val(serviceCenter.mobile);
+                        $('#editCenterEmail').val(serviceCenter.email);
+                        $('#editCenterAddress').val(serviceCenter.address);
+                        $('#editTotal_access_vehicles').val(serviceCenter.total_access_vehicles);
+                        $('#EditserviceCenterId').val(serviceCenter.id);
+                    } else {
+                        alert('An error occurred: ' + response.message);
+                    }
+                },
+                error: function(xhr) {
+                    alert('An error occurred: ' + xhr.responseJSON.message);
+                }
+            });
+
+            $('#editServiceCenterModal').modal('show');
+        }
+
         function StoreServiceCenter() {
             var adminSelect = $('#adminSelect').val();
             var serviceCenterName = $('#serviceCenterName').val();

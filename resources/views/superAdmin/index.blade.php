@@ -17,8 +17,8 @@
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
                             <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                Total Customers (Monthly)</div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">1200</div>
+                                Total Customers ({{ Date::now()->format('M') }})</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $customersInThisMonth }}</div>
                         </div>
                         <div class="col-auto">
                             <i class="fas fa-calendar fa-2x text-gray-300"></i>
@@ -35,8 +35,8 @@
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
                             <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                                Earnings (Monthly)</div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">Rs.215,000</div>
+                                Earnings ({{ Date::now()->format('M') }})</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">Rs.{{ $totalRevenue }}</div>
                         </div>
                         <div class="col-auto">
                             <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
@@ -77,7 +77,7 @@
                         <div class="col mr-2">
                             <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
                                 Total Vehicles</div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">200</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $totalVehicles }}</div>
                         </div>
                         <div class="col-auto">
                             <i class="fas fa-car fa-2x text-gray-300"></i>
@@ -103,7 +103,6 @@
                             <th>Mobile</th>
                             <th>Email</th>
                             <th>Vehicles</th>
-                            <th>Earnings</th>
                         </tr>
                     </thead>
                     <tfoot>
@@ -112,7 +111,6 @@
                             <th>Mobile</th>
                             <th>Email</th>
                             <th>Vehicles</th>
-                            <th>Earnings</th>
                         </tr>
                     </tfoot>
                     <tbody>
@@ -121,8 +119,7 @@
                                 <td>{{ $serviceCenter->name }}</td>
                                 <td>{{ $serviceCenter->mobile }}</td>
                                 <td>{{ $serviceCenter->email }}</td>
-                                <td>{{ $serviceCenter->total_access_vehicles }}</td>
-                                <td>Rs.{{ $serviceCenter->earnings }}</td>
+                                <td>{{ $serviceCenter->vehicles->count() }}</td>
                             </tr>
                         @endforeach
 

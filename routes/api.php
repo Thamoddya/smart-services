@@ -15,3 +15,8 @@ Route::post('/store-vehicle', [ApiController::class, 'StoreVehicle'])->name('sto
 
 
 Route::post('/add-service', [ApiController::class, 'StoreService'])->name('store-service');
+
+//Get service station by id
+Route::post('/get-service-center', [ApiController::class, 'GetServiceCenterById'])->name('get-service-center');
+//Update service station
+Route::post('/update-service-center', [ApiController::class, 'UpdateServiceCenter'])->name('update-service-center');

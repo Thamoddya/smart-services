@@ -40,4 +40,14 @@ class ServiceCenter extends Model
     {
         return $this->hasMany(Service::class, 'service_centers_id');
     }
+
+    //Get sum of all services cost in this service center
+    public function totalRevenue()
+    {
+        $totalRevenue = 0;
+        foreach ($this->services as $service) {
+            $totalRevenue += $service->full_cost;
+        }
+        return $totalRevenue;
+    }
 }

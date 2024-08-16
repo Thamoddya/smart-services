@@ -15,6 +15,87 @@ use Illuminate\Http\Request;
 class ApiController extends Controller
 {
 
+    public function UpdateServiceCenter(Request $request)
+    {
+        // Define validation rules
+        $rules = [
+            'serviceCenterId' => 'required|exists:service_center,id',
+            'editCenterName' => 'required|string|max:255',
+            'editCenterMobile' => 'required|string|max:15',
+            'editCenterEmail' => 'sometimes|email|unique:service_center,email,' . $request->serviceCenterId,
+            'editCenterAddress' => 'required|string|max:255',
+            'editTotal_access_vehicles' => 'sometimes|integer',
+            // 'logo' => 'sometimes|file|mimes:jpeg,png,jpg,gif|max:2048' // Validate logo as an image file
+        ];
+
+        // Validate the incoming request data
+        $validator = \Validator::make($request->all(), $rules);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => 'error',
+                'errors' => $validator->errors()
+            ], 200);
+        }
+
+        // Find the service center
+        $serviceCenter = ServiceCenter::find($request->serviceCenterId);
+
+        if (!$serviceCenter) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Service center not found'
+            ], 404);
+        }
+
+        // Handle the file upload
+        // if ($request->hasFile('logo')) {
+        //     $logo = $request->file('logo');
+        //     $logoPath = $logo->store('logos', 'public'); // Store the file in the 'logos' directory in public storage
+        // } else {
+        //     $logoPath = $serviceCenter->logo_path;
+        // }
+
+        try {
+            $serviceCenter->name = $request->editCenterName;
+            $serviceCenter->address = $request->editCenterAddress;
+            $serviceCenter->mobile = $request->editCenterMobile;
+            $serviceCenter->email = $request->editCenterEmail;
+            $serviceCenter->total_access_vehicles = $request->editTotal_access_vehicles;
+            // $serviceCenter->logo_path = $logoPath;
+            $serviceCenter->save();
+
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Service center updated successfully',
+                'data' => $serviceCenter
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'An error occurred while updating the service center'
+            ], 500);
+        }
+    }
+    public function GetServiceCenterById()
+    {
+        $serviceCenterId = request('serviceCenterId');
+        $serviceCenter = ServiceCenter::find($serviceCenterId);
+
+        if (!$serviceCenter) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Service center not found'
+            ], 404);
+        }
+
+        return response()->json([
+            'status' => 'success',
+            'data' => $serviceCenter
+        ], 200);
+
+    }
+
     public function StoreService(Request $request)
     {
         // Add this line to debug incoming data

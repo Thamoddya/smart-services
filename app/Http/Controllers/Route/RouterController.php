@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Route;
 
 use App\Http\Controllers\Controller;
+use App\Models\Customer;
 use App\Models\ServiceCenter;
 use App\Models\User;
 use App\Models\Vehicle;
@@ -77,10 +78,27 @@ class RouterController extends Controller
         $userData = Auth::user();
         $serviceCenters = ServiceCenter::all();
         $serviceCenterCount = ServiceCenter::count();
+        //Total customers in this month
+        $customersInThisMonth = Customer::whereMonth('created_at', date('m'))->count();
+
+        //Get Total sum of full_cost of all services in all service centers in this month
+        $totalRevenue = 0;
+        $services = ServiceCenter::with('services')->get();
+        foreach ($services as $serviceCenter) {
+            foreach ($serviceCenter->services as $service) {
+                $totalRevenue += $service->full_cost;
+            }
+        }
+
+        //TOtal vehicles in all service centers
+        $totalVehicles = Vehicle::count();
         return view("superAdmin.index", compact([
             'userData',
             'serviceCenters',
-            'serviceCenterCount'
+            'serviceCenterCount',
+            'customersInThisMonth',
+            'totalRevenue',
+            'totalVehicles'
         ]));
     }
     public function SuperAdminServiceCenters()
@@ -88,10 +106,12 @@ class RouterController extends Controller
         $userData = Auth::user();
         $serviceAdmins = User::role('admin')->get();
         $serviceCenters = ServiceCenter::with('user')->get();
+        $serviceCenterCount = ServiceCenter::count();
         return view("superAdmin.serviceCenters", compact([
             'userData',
             'serviceAdmins',
-            'serviceCenters'
+            'serviceCenters',
+            'serviceCenterCount'
         ]));
     }
     public function AdminIndex()
@@ -100,11 +120,27 @@ class RouterController extends Controller
         $serviceCenter = ServiceCenter::where('users_id', $userData->id)->first();
         $customers = $serviceCenter->customers()->get();
         $customerCount = $serviceCenter->customers()->count();
+        //Totl customers in this month in this service center
+        $customersInThisMonth = $serviceCenter->customers()->whereMonth('created_at', date('m'))->count();
+        //Get the all services in this service center and calculate the total revenue
+        $services = $serviceCenter->services()->get();
+        $totalRevenue = 0;
+        foreach ($services as $service) {
+            $totalRevenue += $service->full_cost;
+        }
+
+        $totalVehiclesinServiceCenter = $serviceCenter->vehicles()->count();
+
+        $totalServicesCount = $serviceCenter->services()->count();
         return view("admin.index", compact([
             'userData',
             'serviceCenter',
             'customers',
-            'customerCount'
+            'customerCount',
+            'customersInThisMonth',
+            'totalRevenue',
+            'totalServicesCount',
+            'totalVehiclesinServiceCenter'
         ]));
     }
     public function AdminCustomers()

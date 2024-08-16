@@ -175,17 +175,59 @@
                             <h3>Service History</h3>
                             <div class="mh-experience-deatils">
 
-                                <!-- Education Institutes-->
-                                {{-- <div class="mh-work-item dark-bg wow fadeInUp" data-wow-duration="0.8s"
-                                    data-wow-delay="0.4s">
-                                    <h4>UI/UX Designer <a href="#">IronSketch</a></h4>
-                                    <div class="mh-eduyear">2005-2008</div>
-                                    <span>Responsibility :</span>
-                                    <ul class="work-responsibility">
-                                        <li><i class="fa fa-circle"></i>Validate CSS</li>
-                                        <li><i class="fa fa-circle"></i>Project Management</li>
-                                    </ul>
-                                </div> --}}
+                                @foreach ($vehicleServices as $service)
+                                    {{-- <div class="mh-work-item dark-bg wow fadeInUp" data-wow-duration="0.8s" --}}
+                                    {{-- data-wow-delay="0.2s">
+                                        <h4>Service Type: {{ $service->service_type }}</h4>
+                                        <div class="mh-eduyear mb-2">Invoice Number: {{ $service->invoice_number }}
+                                        </div>
+                                        <div class="mh-eduyear
+                                            mb-2">Date:
+                                            {{ date('d-m-Y', strtotime($service->created_at)) }}</div>
+                                        <div class="mh-eduyear
+                                            mb-2">Time:
+                                            {{ date('h:i A', strtotime($service->created_at)) }}</div>
+                                        <div class="mh-eduyear
+                                            mb-2">
+                                            Service Cost: Rs.{{ $service->full_cost }}.00</div>
+                                        <div class="mh-eduyear
+                                            mb-2">
+                                            Vehicle ID: {{ $service->vehicle_id }}</div>
+                                        <div class="mh-eduyear
+                                            mb-2">
+                                            Customer Name: {{ $service->vehicle->customer->name }}</div>
+                                        <div class="mh-eduyear
+                                            mb-2">
+                                            Vehicle Model: {{ $service->vehicle->model }}</div>
+                                        <div class="mh-eduyear mb-2">Vehicle Number:
+                                            {{ $service->vehicle->vehicle_number }}
+                                        </div>
+                                        <div class="mh-eduyear
+                                            mb-2">
+                                            Service Center: {{ $service->serviceCenter->name }}</div>
+                                        <div class="mh-eduyear
+                                            mb-2">
+                                            Service Center Address: {{ $service->serviceCenter->address }}</div>
+                                        <div class="mh-eduyear
+                                            mb-2">
+                                            Service Center Email: {{ $service->serviceCenter->email }}</div>
+                                        <div class="mh-eduyear
+                                            mb-2">
+                                            Service Center Mobile: {{ $service->serviceCenter->mobile }}</div>
+                                    </div> --}}
+                                    <div class="mh-work-item dark-bg wow fadeInUp" data-wow-duration="0.8s"
+                                        data-wow-delay="0.4s">
+                                        <h4>{{ $service->service_type }} <a
+                                                href="#">#{{ $service->invoice_number }}</a></h4>
+                                        <div class="mh-eduyear">Rs.{{ $service->full_cost }}.00</div>
+                                        <div class="mh-eduyear">Milage : {{ $service->service_milage }} KM</div>
+                                        <span>Detail :</span>
+                                        <ul class="work-responsibility">
+                                            <li><i class="fa fa-circle"></i>{{ $service->service_details }}</li>
+                                        </ul>
+                                    </div>
+                                @endforeach
+
                             </div>
                         </div>
                     </div>

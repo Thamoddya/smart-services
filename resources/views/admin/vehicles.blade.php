@@ -37,14 +37,28 @@
 
     {{-- Add Service Center Admin --}}
     <div class="row my-2">
-        <div class="col-xl-12 col-lg-7">
-            <a type="button" onclick="POPUP_ADD_VEHICLEMODAL();" class="btn btn-success btn-icon-split">
-                <span class="icon text-white-50">
-                    <i class="fas fa-plus"></i>
-                </span>
-                <span class="text">Add Vehicle</span>
-            </a>
-        </div>
+
+        @if ($vehicleCount >= $serviceCenter->total_access_vehicles)
+            <div class="col-xl-12 col-lg-7">
+                <div class="alert alert-danger alert-sm" role="alert">
+                    <h4 class="alert-heading">Warning!</h4>
+                    <p class="mb-0">You have reached the maximum number of vehicles that can be added to the service
+                        center.Contact Admin to increase the limit.
+                    </p>
+                </div>
+            </div>
+        @else
+            <div class="col-xl-12 col-lg-7">
+                <a type="button" onclick="POPUP_ADD_VEHICLEMODAL();" class="btn btn-success btn-icon-split">
+                    <span class="icon text-white-50">
+                        <i class="fas fa-plus"></i>
+                    </span>
+                    <span class="text">Add Vehicle</span>
+                </a>
+            </div>
+        @endif
+
+
     </div>
 
     <!-- Customer DataTales -->
@@ -304,12 +318,10 @@
                 },
                 success: function(data) {
                     if (data.status === 'success') {
-                        alert('Service added successfully!');
                         window.location.reload();
                     } else if (data.status === 'error') {
                         displayValidationErrors(data.errors);
                         console.log(data.errors);
-
                     }
                 },
                 error: function(xhr) {
@@ -388,8 +400,7 @@
                 contentType: false,
                 success: function(data) {
                     if (data.status === 'success') {
-                        alert('Vehicle added successfully!');
-                        // Handle success, e.g., close modal, refresh page
+                        window.location.reload();
                     } else if (data.status === 'error') {
                         displayValidationErrors(data.errors);
                     }
