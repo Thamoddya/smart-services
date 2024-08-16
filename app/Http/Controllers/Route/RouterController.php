@@ -11,9 +11,20 @@ use Illuminate\Support\Facades\Auth;
 
 class RouterController extends Controller
 {
-    public function CustomerHome()
+    public function CustomerHome($vehicleNumber)
     {
-        return view('customer.home');
+        $vehicle = Vehicle::where('vehicle_id', $vehicleNumber)->first();
+        if (!$vehicle) {
+            echo "Vehicle not found";
+            return;
+        }
+        $serviceCenter = $vehicle->serviceCenter()->first();
+        $customer = $vehicle->customer()->first();
+        return view('customer.home',compact([
+            'vehicle',
+            'serviceCenter',
+            'customer'
+        ]));
     }
 
     public function Login(Request $request)
