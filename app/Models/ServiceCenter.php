@@ -35,4 +35,9 @@ class ServiceCenter extends Model
     {
         return $this->hasMany(Customer::class, 'service_center_id');
     }
+
+    public function services()
+    {
+        return $this->hasMany(Service::class, 'service_centers_id');
+    }
 }

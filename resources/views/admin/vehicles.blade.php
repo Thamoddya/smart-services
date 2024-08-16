@@ -70,8 +70,8 @@
                         @foreach ($vehicles as $vehicle)
                             <tr>
                                 <td>
-                                    <img src="{{ asset('storage/' . $vehicle->vehicle_photo) }}" alt="Vehicle Photo"
-                                        class="img-thumbnail" style="width: 100px;">
+                                    <button onclick="POPUP_ADD_SERVICEMODAL('{{ $vehicle->vehicle_id }}');"
+                                        class="btn btn-success btn-sm">Add Service</button>
                                 </td>
                                 <td>{{ $vehicle->vehicle_id }}</td>
                                 <td>{{ $vehicle->vehicle_number }}</td>
@@ -79,15 +79,8 @@
                                 <td>{{ $vehicle->type->name }}</td>
                                 <td>{{ $vehicle->customer->nic }}</td>
                                 <td>
-                                    <a href="#" class="btn btn-primary btn-circle btn-sm">
-                                        <i class="fas fa-eye text-white"></i>
-                                    </a>
-                                    <a href="#" class="btn btn-warning btn-circle btn-sm">
-                                        <i class="fas fa-edit text-white"></i>
-                                    </a>
-                                    <a href="#" class="btn btn-danger btn-circle btn-sm">
-                                        <i class="fas fa-trash text-white"></i>
-                                    </a>
+                                    <button class="btn btn-primary btn-sm">Edit</button>
+                                    <button class="btn btn-danger btn-sm">Delete</button>
                                 </td>
                             </tr>
                         @endforeach
@@ -203,7 +196,128 @@
         </div>
     </div>
 
+    {{-- add service modal --}}
+    <div class="modal fade" id="addServiceModal" tabindex="-1" role="dialog" aria-labelledby="addServiceModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addServiceModalLabel">Add Service To Vehicle</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body mx-3">
+                    <div>
+                        <div class="form-group row" id="serviceVehicleID-group">
+                            <label for="serviceVehicleID" class="col-sm-3 col-form-label">Vehicle ID</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" id="serviceVehicleID"
+                                    placeholder="Service Vehicle ID" disabled>
+                                <!-- Error message will be appended here -->
+                            </div>
+                        </div>
+                        <div class="form-group row" id="beforeServiceMilage-group">
+                            <label for="beforeServiceMilage" class="col-sm-3 col-form-label">Last Service Milage</label>
+                            <div class="col-sm-9">
+                                <input type="number" class="form-control" id="beforeServiceMilage"
+                                    placeholder="Enter Service Milage">
+                                <!-- Error message will be appended here -->
+                            </div>
+                        </div>
+                        <div class="form-group row" id="serviceMilage-group">
+                            <label for="serviceMilage" class="col-sm-3 col-form-label">Next Service Milage</label>
+                            <div class="col-sm-9">
+                                <input type="number" class="form-control" id="serviceMilage"
+                                    placeholder="Enter Next Service Milage">
+                                <!-- Error message will be appended here -->
+                            </div>
+                        </div>
+                        <div class="form-group row" id="serviceType-group">
+                            <label for="serviceType" class="col-sm-3 col-form-label">Service Type</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" id="serviceType"
+                                    placeholder="Enter Service Type">
+                                <!-- Error message will be appended here -->
+                            </div>
+                        </div>
+                        <div class="form-group row" id="serviceDate-group">
+                            <label for="serviceDate" class="col-sm-3 col-form-label">Service Date</label>
+                            <div class="col-sm-9">
+                                <input type="date" class="form-control" id="serviceDate">
+                                <!-- Error message will be appended here -->
+                            </div>
+                        </div>
+                        <div class="form-group  row" id="servicePrice-group">
+                            <label for="servicePrice" class="col-sm-3 col-form-label">Service Price</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" id="servicePrice"
+                                    placeholder="Enter Service Price">
+                                <!-- Error message will be appended here -->
+                            </div>
+                        </div>
+                        <div class="form-group row" id="serviceDescription-group">
+                            <label for="serviceDescription" class="col-sm-3 col-form-label">Service Description</label>
+                            <div class="col-sm-9">
+                                <textarea class="form-control" id="serviceDescription" placeholder="Enter Service Description"></textarea>
+                                <!-- Error message will be appended here -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" onclick="storeService();">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script>
+        function POPUP_ADD_SERVICEMODAL(serviceVehicleNumber) {
+            $('#serviceVehicleID').val(serviceVehicleNumber);
+            $('#addServiceModal').modal('show');
+        }
+
+        function storeService() {
+            var serviceVehicleID = $('#serviceVehicleID').val();
+            var serviceType = $('#serviceType').val();
+            var serviceDate = $('#serviceDate').val();
+            var servicePrice = $('#servicePrice').val();
+            var serviceDescription = $('#serviceDescription').val();
+            var serviceMilage = $('#serviceMilage').val();
+            var beforeServiceMilage = $('#beforeServiceMilage').val();
+
+            console.log("lastServiceMilage : ", beforeServiceMilage); // Add this line to debug
+
+            $.ajax({
+                type: 'POST',
+                url: '{{ route('store-service') }}',
+                data: {
+                    serviceVehicleID: serviceVehicleID,
+                    serviceType: serviceType,
+                    serviceDate: serviceDate,
+                    beforeServiceMilage: beforeServiceMilage,
+                    servicePrice: servicePrice,
+                    serviceDescription: serviceDescription,
+                    serviceMilage: serviceMilage
+                },
+                success: function(data) {
+                    if (data.status === 'success') {
+                        alert('Service added successfully!');
+                        window.location.reload();
+                    } else if (data.status === 'error') {
+                        displayValidationErrors(data.errors);
+                        console.log(data.errors);
+
+                    }
+                },
+                error: function(xhr) {
+                    alert('An error occurred: ' + xhr.responseJSON.message);
+                }
+            });
+        }
+
         function POPUP_ADD_VEHICLEMODAL() {
             // Get Vehicle Types
             $.ajax({

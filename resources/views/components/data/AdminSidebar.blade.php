@@ -38,6 +38,11 @@
             <i class="fas fa-fw fa-car"></i>
             <span>Vehicles</span></a>
     </li>
+    <li class="nav-item {{ Route::currentRouteName() == 'admin.services' ? 'active' : '' }}">
+        <a class="nav-link" href="{{ route('admin.services') }}">
+            <i class="fas fa-fw fa-cog"></i>
+            <span>Services</span></a>
+    </li>
 
 
 

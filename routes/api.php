@@ -12,3 +12,6 @@ Route::post('/add-service-center', [ApiController::class, 'StoreServiceCenter'])
 Route::post('/add-customer', [ApiController::class, 'StoreCustomer'])->name('store-customer');
 Route::post('/get-vehicle-types', [ApiController::class, 'GetVehicleTypes'])->name('get-vehicle-types');
 Route::post('/store-vehicle', [ApiController::class, 'StoreVehicle'])->name('store-vehicle');
+
+
+Route::post('/add-service', [ApiController::class, 'StoreService'])->name('store-service');

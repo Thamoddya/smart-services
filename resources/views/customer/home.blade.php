@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <title>Maha - Personal CV/Resume Template </title>
+    <title>Customer </title>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -37,12 +37,6 @@
     </div> --}}
     <!-- End Loader -->
 
-
-    <!--
-        ===================
-           Home
-        ===================
-        -->
     <section class="mh-home image-bg relative" id="mh-home">
         <div class="img-foverlay img-color-overlay">
             <!--
@@ -296,11 +290,6 @@
                                         </div>
                                     </div>
                                 </div>
-                                @if (Auth::check() && Auth::user()->hasRole('admin'))
-                                    <button class="mh-promo btn bg-">
-                                        Add Service
-                                    </button>
-                                @endif
                             </div>
                         </div>
                     </div>

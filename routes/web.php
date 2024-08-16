@@ -24,6 +24,7 @@ Route::middleware(['auth'])->group(function () {
             Route::get('/', [RouterController::class, 'AdminIndex'])->name('admin.index');
             Route::get('/customers', [RouterController::class, 'AdminCustomers'])->name('admin.customers');
             Route::get('/vehicles', [RouterController::class, 'AdminVehicles'])->name('admin.vehicles');
+            Route::get('/services', [RouterController::class, 'AdminServices'])->name('admin.services');
         });
     });
 

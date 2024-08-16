@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Route;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreAdminRequest;
 use App\Models\Customer;
+use App\Models\Service;
 use App\Models\ServiceCenter;
 use App\Models\User;
 use App\Models\Vehicle;
@@ -14,8 +15,76 @@ use Illuminate\Http\Request;
 class ApiController extends Controller
 {
 
+    public function StoreService(Request $request)
+    {
+        // Add this line to debug incoming data
+        \Log::info($request->all());
+        // Define validation rules
+        $rules = [
+            'beforeServiceMilage' => 'required|integer',
+            'serviceMilage' => 'required|integer|gt:beforeServiceMilage',
+            'serviceVehicleID' => 'required|exists:vehicles,vehicle_id',
+            'serviceType' => 'required|string|max:255',
+            'serviceDate' => 'required|date',
+            'servicePrice' => 'required|string|max:255',
+            'serviceDescription' => 'required|string|max:255',
+        ];
+
+        // Validate the incoming request data
+        $validator = \Validator::make($request->all(), $rules);
+
+        if ($validator->fails()) {
+            // Return validation errors as JSON response
+            return response()->json([
+                'status' => 'error',
+                'errors' => $validator->errors()
+            ], 200);
+        }
+        $vehicle = Vehicle::where('vehicle_id', $request->serviceVehicleID)->first();
+
+        if (!$vehicle) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Vehicle not found'
+            ], 404);
+        }
+
+        //update vehjicle table
+        $vehicle->last_service_km = $request->beforeServiceMilage;
+        $vehicle->next_service_km = $request->serviceMilage;
+        $vehicle->save();
+
+
+        try {
+            $service = Service::create([
+                'service_date' => $request->serviceDate,
+                'service_type' => $request->serviceType,
+                'service_details' => $request->serviceDescription,
+                'full_cost' => $request->servicePrice,
+                'invoice_number' => 'INV' . time(),
+                'vehicles_id' => $vehicle->id,
+                'service_centers_id' => $vehicle->service_center_id,
+                'service_milage' => $request->beforeServiceMilage
+            ]);
+
+            // Return success response
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Service added successfully',
+                'data' => $service
+            ], 201);
+        } catch (\Exception $e) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'An error occurred while adding the service'
+            ], 500);
+        }
+
+    }
     public function StoreVehicle(Request $request)
     {
+
+
         // Validation rules
         $rules = [
             'customerNic' => 'required|string|max:255|exists:customers,nic',

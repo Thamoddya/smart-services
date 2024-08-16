@@ -11,6 +11,21 @@ use Illuminate\Support\Facades\Auth;
 
 class RouterController extends Controller
 {
+
+    public function AdminServices()
+    {
+        $userData = Auth::user();
+        $serviceCenter = ServiceCenter::where('users_id', $userData->id)->first();
+        $services = $serviceCenter->services()->get();
+        $serviceCount = $serviceCenter->services()->count();
+        return view("admin.services", compact([
+            'userData',
+            'serviceCenter',
+            'services',
+            'serviceCount'
+        ]));
+    }
+
     public function CustomerHome($vehicleNumber)
     {
         $vehicle = Vehicle::where('vehicle_id', $vehicleNumber)->first();
@@ -20,10 +35,12 @@ class RouterController extends Controller
         }
         $serviceCenter = $vehicle->serviceCenter()->first();
         $customer = $vehicle->customer()->first();
-        return view('customer.home',compact([
+        $vehicleServices = $vehicle->services()->get();
+        return view('customer.home', compact([
             'vehicle',
             'serviceCenter',
-            'customer'
+            'customer',
+            'vehicleServices'
         ]));
     }
 
