@@ -11,6 +11,10 @@ use Illuminate\Support\Facades\Auth;
 
 class RouterController extends Controller
 {
+    public function CustomerHome()
+    {
+        return view('customer.home');
+    }
 
     public function Login(Request $request)
     {
@@ -51,7 +55,6 @@ class RouterController extends Controller
             'serviceCenterCount'
         ]));
     }
-
     public function SuperAdminServiceCenters()
     {
         $userData = Auth::user();
@@ -63,8 +66,6 @@ class RouterController extends Controller
             'serviceCenters'
         ]));
     }
-
-
     public function AdminIndex()
     {
         $userData = Auth::user();
@@ -104,7 +105,6 @@ class RouterController extends Controller
             'vehicleCount'
         ]));
     }
-
     public function SuperAdminVehicles()
     {
         $userData = Auth::user();
@@ -116,9 +116,6 @@ class RouterController extends Controller
             'vehicleCount'
         ]));
     }
-
-
-
     public function Logout()
     {
         Auth::logout();

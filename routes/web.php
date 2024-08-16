@@ -27,6 +27,7 @@ Route::middleware(['auth'])->group(function () {
         });
     });
 
-
     Route::get('/logout', [RouterController::class, 'Logout'])->name('logout');
 });
+
+Route::get('/customer', [RouterController::class, 'CustomerHome'])->name('customer.home');
