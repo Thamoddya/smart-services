@@ -18,6 +18,7 @@ class ServiceCenter extends Model
         'email',
         'total_access_vehicles',
         'users_id',
+        'logo_path'
     ];
 
     public function user()
@@ -28,5 +29,10 @@ class ServiceCenter extends Model
     public function vehicles()
     {
         return $this->hasMany(Vehicle::class, 'service_center_id');
+    }
+
+    public function customers()
+    {
+        return $this->hasMany(Customer::class, 'service_center_id');
     }
 }

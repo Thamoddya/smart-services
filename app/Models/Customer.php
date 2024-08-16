@@ -24,4 +24,9 @@ class Customer extends Model
     {
         return $this->belongsTo(ServiceCenter::class, 'service_center_id');
     }
+
+    public function vehicles()
+    {
+        return $this->hasMany(Vehicle::class, 'customer_id');
+    }
 }

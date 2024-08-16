@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0,shrink-to-fit=no">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Super Admin</title>
+    <title>Admin</title>
 
     <!-- Custom fonts for this template-->
     <link href="{{ asset('data/vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet" type="text/css">
@@ -25,7 +25,7 @@
     <div id="wrapper">
 
         <!-- Sidebar -->
-        @include('components.data.superAdminSidebar')
+        @include('components.data.AdminSidebar')
         <!-- End of Sidebar -->
 
         <!-- Content Wrapper -->
@@ -97,28 +97,6 @@
     <script>
         $(document).ready(function() {
             $('#dataTable').DataTable({
-                dom: 'Bfrtip',
-                buttons: [{
-                        extend: 'csvHtml5',
-                        text: '<i class="fa fa-file-csv"></i> CSV',
-                        titleAttr: 'Export to CSV',
-                        className: 'btn btn-primary my-2' // Adds Bootstrap primary button styling
-                    },
-                    {
-                        extend: 'pdfHtml5',
-                        text: '<i class="fa fa-file-pdf"></i> PDF',
-                        titleAttr: 'Export to PDF',
-                        className: 'btn btn-danger my-2' // Adds Bootstrap danger button styling (red)
-                    },
-                    {
-                        extend: 'print',
-                        text: '<i class="fa fa-print"></i> Print',
-                        titleAttr: 'Print',
-                        className: 'btn btn-success my-2' // Adds Bootstrap success button styling (green)
-                    }
-                ]
-            });
-            $('#adminsTable').DataTable({
                 dom: 'Bfrtip',
                 buttons: [{
                         extend: 'csvHtml5',

@@ -3,7 +3,7 @@
     <!-- Sidebar - Brand -->
     <a class="sidebar-brand d-flex align-items-center justify-content-center" href="#">
         <div class="sidebar-brand-icon">
-            <i class="fas fa-home"></i>
+            <img src="{{ asset('storage/' . $serviceCenter->logo_path) }}" alt="Logo" width="50px">
         </div>
         <div class="sidebar-brand-text mx-3">{{ $userData->name }}</div>
     </a>
@@ -12,8 +12,8 @@
     <hr class="sidebar-divider my-0">
 
     <!-- Nav Item - Dashboard -->
-    <li class="nav-item {{ Route::currentRouteName() == 'superAdmin.index' ? 'active' : '' }}">
-        <a class="nav-link" href="{{ route('superAdmin.index') }}">
+    <li class="nav-item {{ Route::currentRouteName() == 'admin.index' ? 'active' : '' }}">
+        <a class="nav-link" href="{{ route('admin.index') }}">
             <i class="fas fa-fw fa-tachometer-alt"></i>
             <span>Dashboard</span></a>
     </li>
@@ -27,11 +27,19 @@
     </div>
 
     <!-- Nav Item - Dashboard -->
-    <li class="nav-item {{ Route::currentRouteName() == 'superAdmin.serviceCenters' ? 'active' : '' }}">
-        <a class="nav-link" href="{{ route('superAdmin.serviceCenters') }}">
-            <i class="fas fa-fw fa-cog"></i>
-            <span>Service Center</span></a>
+    <!-- Nav Item - Dashboard -->
+    <li class="nav-item {{ Route::currentRouteName() == 'admin.customers' ? 'active' : '' }}">
+        <a class="nav-link" href="{{ route('admin.customers') }}">
+            <i class="fas fa-fw fa-user"></i>
+            <span>Customers</span></a>
     </li>
+    <li class="nav-item {{ Route::currentRouteName() == 'admin.vehicles' ? 'active' : '' }}">
+        <a class="nav-link" href="{{ route('admin.vehicles') }}">
+            <i class="fas fa-fw fa-car"></i>
+            <span>Vehicles</span></a>
+    </li>
+
+
 
     {{-- <!-- Nav Item - Utilities Collapse Menu -->
     <li class="nav-item">

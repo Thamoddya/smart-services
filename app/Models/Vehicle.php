@@ -14,27 +14,34 @@ class Vehicle extends Model
     protected $fillable = [
         'type_id',
         'vehicle_number',
-        'last_service_date',
+        'last_service_km',
         'total_servies_count',
         'next_service_date',
         'vehicle_photo',
         'vehicle_video',
         'service_center_id',
-        'customer_id'
+        'customer_id',
+        'vehicle_id',
+        'chassis_number',
+        'next_service_km',
     ];
 
     public function type()
     {
         return $this->belongsTo(VehicleType::class, 'type_id');
     }
-    public function vehicles()
-    {
-        return $this->hasMany(Vehicle::class, 'service_center_id');
-    }
-
     // Accessor to get the total vehicle count
     public function getTotalVehicleCountAttribute()
     {
         return $this->vehicles()->count();
+    }
+
+    public function serviceCenter()
+    {
+        return $this->belongsTo(ServiceCenter::class, 'service_center_id');
+    }
+    public function customer()
+    {
+        return $this->belongsTo(Customer::class, 'customer_id');
     }
 }

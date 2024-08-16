@@ -22,8 +22,17 @@ class RouterController extends Controller
 
             if ($user->hasRole('super-admin')) {
                 return redirect()->route('superAdmin.index');
+            } else if ($user->hasRole('admin')) {
+
+                //CHeck user has service center
+                $serviceCenter = ServiceCenter::where('users_id', $user->id)->first();
+                if (!$serviceCenter) {
+                    return redirect()->route('login')->withErrors(['error' => 'You are not assigned to any service center']);
+                }
+
+                return redirect()->route('admin.index');
             } else {
-                echo "Admin";
+                echo "Please contact the administrator";
             }
         } else {
             return redirect()->back()->withErrors(['error' => 'Invalid credentials'])->withInput();
@@ -52,5 +61,55 @@ class RouterController extends Controller
             'serviceAdmins',
             'serviceCenters'
         ]));
+    }
+
+
+    public function AdminIndex()
+    {
+        $userData = Auth::user();
+        $serviceCenter = ServiceCenter::where('users_id', $userData->id)->first();
+        $customers = $serviceCenter->customers()->get();
+        $customerCount = $serviceCenter->customers()->count();
+        return view("admin.index", compact([
+            'userData',
+            'serviceCenter',
+            'customers',
+            'customerCount'
+        ]));
+    }
+    public function AdminCustomers()
+    {
+        $userData = Auth::user();
+        $serviceCenter = ServiceCenter::where('users_id', $userData->id)->first();
+        $customers = $serviceCenter->customers()->get();
+        $customerCount = $serviceCenter->customers()->count();
+        return view("admin.customers", compact([
+            'userData',
+            'serviceCenter',
+            'customers',
+            'customerCount'
+        ]));
+    }
+    public function AdminVehicles()
+    {
+        $userData = Auth::user();
+        $serviceCenter = ServiceCenter::where('users_id', $userData->id)->first();
+        $vehicles = $serviceCenter->vehicles()->get();
+        $vehicleCount = $serviceCenter->vehicles()->count();
+        return view("admin.vehicles", compact([
+            'userData',
+            'serviceCenter',
+            'vehicles',
+            'vehicleCount'
+        ]));
+    }
+
+
+
+
+    public function Logout()
+    {
+        Auth::logout();
+        return redirect()->route('login');
     }
 }

@@ -16,9 +16,12 @@ return new class extends Migration {
             $table->unsignedBigInteger('service_center_id');
             $table->unsignedBigInteger('customer_id');
             $table->string('vehicle_number')->unique();
-            $table->dateTime('last_service_date')->nullable();
+            $table->string('vehicle_id')->unique();
+            $table->date('last_service_date')->nullable();
             $table->integer('total_servies_count')->nullable();
-            $table->date('next_service_date')->nullable();
+            $table->integer('last_service_km')->default(0)->nullable();
+            $table->integer('next_service_km')->default(0)->nullable();
+            $table->string('chassis_number')->nullable();
             $table->string('vehicle_photo')->nullable();
             $table->string('vehicle_video')->nullable();
 

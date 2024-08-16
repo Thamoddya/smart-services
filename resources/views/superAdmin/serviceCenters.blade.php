@@ -121,6 +121,7 @@
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                     <thead>
                         <tr>
+                            <th></th>
                             <th>Admin Name</th>
                             <th>Service Center Name</th>
                             <th>Mobile</th>
@@ -132,6 +133,7 @@
                     </thead>
                     <tfoot>
                         <tr>
+                            <th></th>
                             <th>Admin Name</th>
                             <th>Service Center Name</th>
                             <th>Mobile</th>
@@ -144,6 +146,8 @@
                     <tbody>
                         @foreach ($serviceCenters as $serviceCenter)
                             <tr>
+                                <td><img src="{{ asset('storage/' . $serviceCenter->logo_path) }}" alt="Logo"
+                                        style="width: 50px; height: 50px;"></td>
                                 <td>{{ $serviceCenter->user->name }}</td>
                                 <td>{{ $serviceCenter->name }}</td>
                                 <td>{{ $serviceCenter->mobile }}</td>
@@ -287,6 +291,14 @@
                                 <!-- Error message will be appended here -->
                             </div>
                         </div>
+                        {{-- Logo Image --}}
+                        <div class="form-group row" id="logo-group">
+                            <label for="logo" class="col-sm-3 col-form-label">Logo</label>
+                            <div class="col-sm-9">
+                                <input type="file" class="form-control" id="logo" placeholder="Logo">
+                                <!-- Error message will be appended here -->
+                            </div>
+                        </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -306,21 +318,24 @@
             var serviceCenterEmail = $('#serviceCenterEmail').val();
             var serviceCenterAddress = $('#serviceCenterAddress').val();
             var total_access_vehicles = $('#total_access_vehicles').val();
+            var logo = $('#logo')[0].files[0]; // Get the selected file
 
-
-            let data = {
-                adminSelect: adminSelect,
-                serviceCenterName: serviceCenterName,
-                serviceCenterMobile: serviceCenterMobile,
-                serviceCenterEmail: serviceCenterEmail,
-                serviceCenterAddress: serviceCenterAddress,
-                total_access_vehicles: total_access_vehicles
-            };
+            // Create a FormData object to handle the file upload
+            let formData = new FormData();
+            formData.append('adminSelect', adminSelect);
+            formData.append('serviceCenterName', serviceCenterName);
+            formData.append('serviceCenterMobile', serviceCenterMobile);
+            formData.append('serviceCenterEmail', serviceCenterEmail);
+            formData.append('serviceCenterAddress', serviceCenterAddress);
+            formData.append('total_access_vehicles', total_access_vehicles);
+            formData.append('logo', logo); // Add the logo to the FormData
 
             $.ajax({
                 url: '{{ route('store-service-center') }}',
                 type: 'POST',
-                data: data,
+                data: formData,
+                contentType: false, // Necessary for file upload
+                processData: false, // Necessary for file upload
                 success: function(response) {
                     if (response.status === 'success') {
                         window.location.reload();
@@ -328,7 +343,6 @@
                         // Handle validation errors
                         displayServicecenterErrors(response.errors);
                         console.log(response.errors);
-
                     }
                 },
                 error: function(xhr) {

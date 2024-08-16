@@ -18,4 +18,14 @@ Route::middleware(['auth'])->group(function () {
         });
     });
 
+    Route::group(['middleware' => ['role:admin']], function () {
+        Route::prefix('admin')->group(function () {
+            Route::get('/', [RouterController::class, 'AdminIndex'])->name('admin.index');
+            Route::get('/customers', [RouterController::class, 'AdminCustomers'])->name('admin.customers');
+            Route::get('/vehicles', [RouterController::class, 'AdminVehicles'])->name('admin.vehicles');
+        });
+    });
+
+
+    Route::get('/logout', [RouterController::class, 'Logout'])->name('logout');
 });
