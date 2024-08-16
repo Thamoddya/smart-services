@@ -23,7 +23,27 @@
     <!-- Custom CSS-->
     <link rel="stylesheet" href="{{ asset('customer/css/styles.css') }}">
     <link rel="stylesheet" href="{{ asset('customer/css/responsive.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- CSS for Blinking Effect -->
+    <style>
+        .blink-icon {
+            font-size: 0.8em;
+            color: green;
+            animation: blink 1s infinite;
+        }
 
+        @keyframes blink {
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0;
+            }
+        }
+    </style>
 </head>
 
 <body class="dark-vertion home-video black-bg">
@@ -48,8 +68,7 @@
                     @if ($vehicle->vehicle_video)
                         <source src="{{ asset('storage/' . $vehicle->vehicle_video) }}" type="video/mp4">
                     @else
-                        <source src="https://videos.pexels.com/video-files/4489802/4489802-uhd_2732_1440_25fps.mp4"
-                            type="video/mp4">
+                        <source src="{{ asset('customer/demo.mp4') }}" type="video/mp4">
                     @endif
 
                     <!-- <source src="video/video.ogv" type="video/ogv"> -->
@@ -68,7 +87,11 @@
                             <h4 class="wow fadeInUp" data-wow-duration="0.8s" data-wow-delay="0.3s">
                                 {{ $serviceCenter->name }}
                             </h4>
-
+                            <h6 class="wow fadeInUp text-success" data-wow-duration="0.8s" data-wow-delay="0.3s">
+                                <!-- Blinking Icon -->
+                                <i class="fas fa-exclamation-circle blink-icon"></i>
+                                Next Service Mileage: <strong>{{ $vehicle->next_service_km }}</strong>
+                            </h6>
                             <ul>
                                 <li class="wow fadeInUp" data-wow-duration="0.8s" data-wow-delay="0.4s"><i
                                         class="fa fa-envelope"></i><a href="mailto:">{{ $serviceCenter->email }}</a>

@@ -17,6 +17,46 @@
     <link href="{{ asset('data/css/sb-admin-2.min.css') }}" rel="stylesheet">
 
     <link href="{{ asset('data/vendor/datatables/dataTables.bootstrap4.min.css') }}" rel="stylesheet">
+
+    <style>
+        .vehicle-card {
+            background-color: #f8f9fa;
+            border-radius: 10px;
+            padding: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .vehicle-header {
+            text-align: center;
+            margin-bottom: 15px;
+        }
+
+        .vehicle-body {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+        }
+
+        .vehicle-info {
+            flex: 1;
+        }
+
+        .vehicle-qr {
+            flex: 0 0 128px;
+            margin-left: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .vehicle-qr #qrcode {
+            width: 128px;
+            height: 128px;
+        }
+    </style>
 </head>
 
 <body>
@@ -94,6 +134,11 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
+
     <script>
         $(document).ready(function() {
             $('#dataTable').DataTable({

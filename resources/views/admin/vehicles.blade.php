@@ -57,8 +57,6 @@
                 </a>
             </div>
         @endif
-
-
     </div>
 
     <!-- Customer DataTales -->
@@ -94,7 +92,8 @@
                                 <td>{{ $vehicle->customer->nic }}</td>
                                 <td>
                                     <button class="btn btn-primary btn-sm">Edit</button>
-                                    <button class="btn btn-danger btn-sm">Delete</button>
+                                    <button class="btn btn-success btn-sm"
+                                        onclick="POPUP_VIEW_VEHICLE_MODAL('{{ $vehicle->vehicle_id }}','{{ $vehicle->vehicle_number }}','{{ $vehicle->customer->nic }}','{{ $vehicle->type->name }}');">VIEW</button>
                                 </td>
                             </tr>
                         @endforeach
@@ -163,14 +162,6 @@
                             </div>
                         </div>
 
-                        {{-- Last Service Date --}}
-                        <div class="form-group row" id="lastServiceDate-group">
-                            <label for="lastServiceDate" class="col-sm-3 col-form-label">Last Service Date</label>
-                            <div class="col-sm-9">
-                                <input type="date" class="form-control" id="lastServiceDate">
-                                <!-- Error message will be appended here -->
-                            </div>
-                        </div>
                         {{-- Last Service Milage --}}
                         <div class="form-group row" id="lastServiceMilage-group">
                             <label for="lastServiceMilage" class="col-sm-3 col-form-label">Last Service Milage</label>
@@ -287,7 +278,61 @@
         </div>
     </div>
 
+    {{-- View Vehicle Details --}}
+    <div class="modal fade" id="viewVehicleModal" tabindex="-1" role="dialog" aria-labelledby="viewVehicleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="viewVehicleModalLabel">Vehicle Details</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body mx-3">
+                    <div class="vehicle-card">
+                        <div class="vehicle-header">
+                            <h4 id="VehicleIDNumber">Vehicle ID: </h4>
+                        </div>
+                        <div class="vehicle-body">
+                            <div class="vehicle-info">
+                                <p><strong>V Number:</strong> <p id="modalVehicleNumber"></p></p>
+                                <p><strong>Type:</strong><p id="modalVehicleType"></p></p>
+                                <p><strong>NIC:</strong> <p id="modalNic"></p></p>
+                                <!-- Add more vehicle details as needed -->
+                            </div>
+                            <div class="vehicle-qr">
+                                <!-- Container for the QR code -->
+                                <div id="qrcode"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script>
+        function POPUP_VIEW_VEHICLE_MODAL(vehicleID,VehicleNumber,customerNIC,vehicleType) {
+            document.getElementById('qrcode').innerHTML = '';
+            document.getElementById('VehicleIDNumber').innerText = `Vehicle ID: ${vehicleID}`;
+            document.getElementById('modalVehicleNumber').innerText = VehicleNumber;
+            document.getElementById('modalVehicleType').innerText = vehicleType;
+            document.getElementById('modalNic').innerText = customerNIC;
+            var url = `{{ url('/cus') }}/${vehicleID}`;
+
+            var qrcode = new QRCode(document.getElementById("qrcode"), {
+                text: url,
+                width: 128, // QR code width
+                height: 128, // QR code height
+            });
+
+            $('#viewVehicleModal').modal('show');
+        }
+
         function POPUP_ADD_SERVICEMODAL(serviceVehicleNumber) {
             $('#serviceVehicleID').val(serviceVehicleNumber);
             $('#addServiceModal').modal('show');
@@ -369,7 +414,6 @@
             var vehicleID = $('#vehicleID').val();
             var vehicleNumber = $('#vehicleNumber').val();
             var chassisNumber = $('#chassisNumber').val();
-            var lastServiceDate = $('#lastServiceDate').val();
             var lastServiceMilage = $('#lastServiceMilage').val();
             var nextServiceMilage = $('#nextServiceMilage').val();
             var vehiclePhoto = $('#vehiclePhoto')[0].files[0];
@@ -381,7 +425,6 @@
             formData.append('vehicleID', vehicleID);
             formData.append('vehicleNumber', vehicleNumber);
             formData.append('chassisNumber', chassisNumber);
-            formData.append('lastServiceDate', lastServiceDate);
             formData.append('lastServiceMilage', lastServiceMilage);
             formData.append('nextServiceMilage', nextServiceMilage);
             formData.append('cerviceCenterId', '{{ $serviceCenter->id }}');

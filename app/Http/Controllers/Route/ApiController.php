@@ -173,13 +173,24 @@ class ApiController extends Controller
             'vehicleID' => 'required|string|max:255|unique:vehicles,vehicle_id',
             'vehicleNumber' => 'required|string|max:255',
             'chassisNumber' => 'required|string|max:255',
-            'lastServiceDate' => 'nullable|date',
             'lastServiceMilage' => 'nullable|integer',
             'nextServiceMilage' => 'nullable|integer',
             'vehiclePhoto' => 'required|image', // 2MB Max
             'vehicleVideo' => 'sometimes|mimetypes:video/avi,video/mpeg,video/mp4|max:10240', // 10MB Max
             'cerviceCenterId' => 'required|exists:service_center,id',
         ];
+
+        //Check if the customer NIC is registed under the service center
+        $customer = Customer::where('nic', $request->customerNic)
+            ->where('service_center_id', $request->cerviceCenterId)
+            ->first();
+
+        if (!$customer) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'NIC not found under the service center'
+            ], 404);
+        }
 
         // Validate the incoming request data
         $validator = \Validator::make($request->all(), $rules);
@@ -213,7 +224,6 @@ class ApiController extends Controller
                 'chassis_number' => $request->chassisNumber,
                 'last_service_km' => $request->lastServiceMilage,
                 'next_service_km' => $request->nextServiceMilage,
-                'last_service_date' => $request->lastServiceDate,
                 'vehicle_photo' => $vehiclePhotoPath,
                 'vehicle_video' => $vehicleVideoPath,
                 'service_center_id' => $request->cerviceCenterId,
