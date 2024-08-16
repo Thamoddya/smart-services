@@ -107,7 +107,9 @@ class ApiController extends Controller
 
     public function GetAdmins()
     {
-        $admins = User::role('admin')->get();
+        $admins = User::role('admin')
+            ->whereDoesntHave('serviceCenter')
+            ->get();
 
         return response()->json([
             'status' => 'success',

@@ -34,9 +34,11 @@ class RouterController extends Controller
     {
         $userData = Auth::user();
         $serviceCenters = ServiceCenter::all();
+        $serviceCenterCount = ServiceCenter::count();
         return view("superAdmin.index", compact([
             'userData',
-            'serviceCenters'
+            'serviceCenters',
+            'serviceCenterCount'
         ]));
     }
 

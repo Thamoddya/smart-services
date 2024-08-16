@@ -5,8 +5,9 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('Login');
-});
-Route::get('/login', [RouterController::class, 'Login'])->name('login');
+})->name('login');
+
+Route::get('/login-process', [RouterController::class, 'Login'])->name('login-process');
 
 Route::middleware(['auth'])->group(function () {
 

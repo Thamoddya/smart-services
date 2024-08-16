@@ -29,6 +29,4 @@ class ServiceCenter extends Model
     {
         return $this->hasMany(Vehicle::class, 'service_center_id');
     }
-
-
 }

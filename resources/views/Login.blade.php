@@ -74,7 +74,7 @@
                 @endforeach
             </div>
         @endif
-        <form action="{{ route('login') }}" method="GET">
+        <form action="{{ route('login-process') }}" method="GET">
             @csrf
             <div class="form-group">
                 <label for="email">Email address</label>

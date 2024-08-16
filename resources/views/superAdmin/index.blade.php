@@ -56,7 +56,7 @@
                             </div>
                             <div class="row no-gutters align-items-center">
                                 <div class="col-auto">
-                                    <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">29</div>
+                                    <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">{{ $serviceCenterCount }}</div>
                                 </div>
 
                             </div>
@@ -121,7 +121,7 @@
                                 <td>{{ $serviceCenter->name }}</td>
                                 <td>{{ $serviceCenter->mobile }}</td>
                                 <td>{{ $serviceCenter->email }}</td>
-                                <td>{{ $serviceCenter->vehicles }}</td>
+                                <td>{{ $serviceCenter->total_access_vehicles }}</td>
                                 <td>Rs.{{ $serviceCenter->earnings }}</td>
                             </tr>
                         @endforeach

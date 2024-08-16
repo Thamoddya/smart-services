@@ -43,4 +43,9 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function serviceCenter()
+    {
+        return $this->hasOne(ServiceCenter::class, 'users_id');
+    }
 }
