@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Route;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreAdminRequest;
+use App\Mail\CustomerWelcomeMail;
 use App\Models\Customer;
 use App\Models\Service;
 use App\Models\ServiceCenter;
@@ -11,11 +12,12 @@ use App\Models\User;
 use App\Models\Vehicle;
 use App\Models\VehicleType;
 use Illuminate\Http\Request;
+use Mail;
 
 class ApiController extends Controller
 {
 
-    public function StoreVehicleType (Request $request)
+    public function StoreVehicleType(Request $request)
     {
         // Define validation rules
         $rules = [
@@ -422,6 +424,9 @@ class ApiController extends Controller
                 'address' => $request->customerAddress,
                 'nic' => $request->customerNIC,
             ]);
+
+            // Dispatch email to the queue
+            \App\Jobs\SendCustomerWelcomeEmail::dispatch($customer);
 
             // Return success response
             return response()->json([

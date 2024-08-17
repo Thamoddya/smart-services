@@ -241,6 +241,9 @@
                         titleAttr: 'Print',
                         className: 'btn btn-success my-2' // Adds Bootstrap success button styling (green)
                     }
+                ],
+                "order": [
+                    [0, "desc"]
                 ]
             });
         });

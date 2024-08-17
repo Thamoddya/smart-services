@@ -32,7 +32,8 @@ class RouterController extends Controller
     {
         $userData = Auth::user();
         $serviceCenter = ServiceCenter::where('users_id', $userData->id)->first();
-        $services = $serviceCenter->services()->get();
+        //Get all services of this service center last services first by created_at
+        $services = $serviceCenter->services()->orderBy('created_at', 'asc')->get();
         $serviceCount = $serviceCenter->services()->count();
         return view("admin.services", compact([
             'userData',
