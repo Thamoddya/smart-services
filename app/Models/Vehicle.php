@@ -24,6 +24,7 @@ class Vehicle extends Model
         'vehicle_id',
         'chassis_number',
         'next_service_km',
+        'model_name',
     ];
 
     public function type()

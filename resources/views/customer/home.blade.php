@@ -26,6 +26,27 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <!-- CSS for Blinking Effect -->
     <style>
+        .img-border {
+            width: 200px;
+            /* Adjust to your desired size */
+            height: 200px;
+            /* Same as width to maintain a square */
+            border-radius: 50%;
+            /* Makes the container circular */
+            overflow: hidden;
+            /* Ensures the image doesn't overflow */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .rounded-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            /* Crops the image to fit the container */
+        }
+
         .blink-icon {
             font-size: 0.8em;
             color: green;
@@ -93,6 +114,17 @@
                                 Next Service Mileage: <strong>{{ $vehicle->next_service_km }}</strong>
                             </h6>
                             <ul>
+                                <li class="wow fadeInUp" data-wow-duration="0.8s" data-wow-delay="0.4s">
+                                    CHASSE NO :- <a class="text-secondary">{{ $vehicle->chassis_number }}</a>
+                                </li>
+                                <li class="wow fadeIn Up" data-wow-duration="0.8s" data-wow-delay="0.5s">
+                                    VEHICLE NO :- <a class="text-secondary">{{ $vehicle->vehicle_number }}</a>
+                                </li>
+                                <li class="wow fadeIn Up" data-wow-duration="0.8s" data-wow-delay="0.6s">
+                                    MODEL :- <a class="text-secondary">{{ $vehicle->model_name }}</a>
+                                </li>
+                            </ul>
+                            <ul>
                                 <li class="wow fadeInUp" data-wow-duration="0.8s" data-wow-delay="0.4s"><i
                                         class="fa fa-envelope"></i><a href="mailto:">{{ $serviceCenter->email }}</a>
                                 </li>
@@ -110,7 +142,7 @@
                         <div class="hero-img wow fadeInUp" data-wow-duration="0.8s" data-wow-delay="0.6s">
                             <div class="img-border">
                                 <img src="{{ asset('storage/' . $vehicle->vehicle_photo) }}" alt=""
-                                    class="img-fluid">
+                                    class="img-fluid rounded-img">
                             </div>
                         </div>
                     </div>
@@ -298,60 +330,19 @@
     <footer class="mh-footer mh-footer-3" id="mh-contact">
         <div class="container-fluid">
             <div class="row section-separator">
-                <div class="col-sm-12 section-title wow fadeInUp" data-wow-duration="0.8s" data-wow-delay="0.2s">
-                    <h3>Contact Me</h3>
-                </div>
                 <div class="map-image image-bg col-sm-12">
                     <div class="container mt-30">
                         <div class="row">
-                            <div class="col-sm-12 col-md-6 mh-footer-address">
-                                <div class="col-sm-12 xs-no-padding">
-                                    <div class="mh-address-footer-item dark-bg shadow-1 media wow fadeInUp"
-                                        data-wow-duration="0.8s" data-wow-delay="0.2s">
-                                        <div class="each-icon">
-                                            <i class="fa fa-location-arrow"></i>
-                                        </div>
-                                        <div class="each-info media-body">
-                                            <h4>Address</h4>
-                                            <address>
-                                                {{ $serviceCenter->address }}
-                                            </address>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-sm-12 xs-no-padding">
-                                    <div class="mh-address-footer-item media dark-bg shadow-1 wow fadeInUp"
-                                        data-wow-duration="0.8s" data-wow-delay="0.4s">
-                                        <div class="each-icon">
-                                            <i class="fa fa-envelope-o"></i>
-                                        </div>
-                                        <div class="each-info media-body">
-                                            <h4>Email</h4>
-                                            <a
-                                                href="mailto:{{ $serviceCenter->email }}">{{ $serviceCenter->email }}</a><br>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-sm-12 xs-no-padding">
-                                    <div class="mh-address-footer-item media dark-bg shadow-1 wow fadeInUp"
-                                        data-wow-duration="0.8s" data-wow-delay="0.6s">
-                                        <div class="each-icon">
-                                            <i class="fa fa-phone"></i>
-                                        </div>
-                                        <div class="each-info media-body">
-                                            <h4>Phone</h4>
-                                            <a
-                                                href="callto:{{ $serviceCenter->mobile }}">{{ $serviceCenter->mobile }}</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
                             <div class="col-sm-12 mh-copyright wow fadeInUp" data-wow-duration="0.8s"
                                 data-wow-delay="0.2s">
                                 <div class="row">
+                                    <div class="col-sm-6 d-flex align-items-center justify-content-center">
+                                        <img style="width: 100px; height: 100px; border-radius: 50%; overflow: hidden; display: flex; align-items: center; justify-content: center;"
+                                            src="{{ asset('storage/' . $serviceCenter->logo_path) }}" alt="logo">
+                                    </div>
                                     <div class="col-sm-6">
                                         <div class="text-left text-xs-center">
-                                            <p>All right reserved Texta World 2024</p>
+                                            <p>All right reserved Texta World Company @2024</p>
                                         </div>
                                     </div>
                                 </div>

@@ -214,6 +214,8 @@ class ApiController extends Controller
             'vehiclePhoto' => 'required|image', // 2MB Max
             'vehicleVideo' => 'sometimes|mimetypes:video/avi,video/mpeg,video/mp4|max:10240', // 10MB Max
             'cerviceCenterId' => 'required|exists:service_center,id',
+            'modelName' => 'required|string|max:255',
+
         ];
 
         //Check if the customer NIC is registed under the service center
@@ -263,6 +265,7 @@ class ApiController extends Controller
                 'vehicle_photo' => $vehiclePhotoPath,
                 'vehicle_video' => $vehicleVideoPath,
                 'service_center_id' => $request->cerviceCenterId,
+                'model_name' => $request->modelName,
             ]);
 
             // Return success response

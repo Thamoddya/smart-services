@@ -50,4 +50,10 @@ class ServiceCenter extends Model
         }
         return $totalRevenue;
     }
+
+    //Get all Our Services
+    public function ourServices()
+    {
+        return $this->hasMany(OurServices::class, 'service_centers_id');
+    }
 }

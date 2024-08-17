@@ -134,6 +134,13 @@
                             <label for="vehicleID" class="text-danger">Vehicle ID *</label>
                             <input type="text" class="form-control" id="vehicleID" placeholder="Enter Vehicle Id">
                         </div>
+                        <div class="form-group row" id="modelName-group">
+                            <label for="modelName" class="col-sm-3 col-form-label">Model Name</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" id="modelName" placeholder="Enter Model Name">
+                                <!-- Error message will be appended here -->
+                            </div>
+                        </div>
                         <div class="form-group" id="vehicleNumber-group">
                             <label for="vehicleNumber">Vehicle Number Plate (Eg:- BDO2763)</label>
                             <input type="text" class="form-control" id="vehicleNumber"
@@ -416,6 +423,7 @@
             var chassisNumber = $('#chassisNumber').val();
             var lastServiceMilage = $('#lastServiceMilage').val();
             var nextServiceMilage = $('#nextServiceMilage').val();
+            var modelName = $('#modelName').val();
             var vehiclePhoto = $('#vehiclePhoto')[0].files[0];
             var vehicleVideo = $('#vehicleVideo')[0].files[0];
 
@@ -428,6 +436,8 @@
             formData.append('lastServiceMilage', lastServiceMilage);
             formData.append('nextServiceMilage', nextServiceMilage);
             formData.append('cerviceCenterId', '{{ $serviceCenter->id }}');
+            formData.append('modelName', modelName);
+
             if (vehiclePhoto) {
                 formData.append('vehiclePhoto', vehiclePhoto);
             }

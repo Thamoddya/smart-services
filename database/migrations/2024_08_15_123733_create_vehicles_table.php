@@ -24,6 +24,7 @@ return new class extends Migration {
             $table->string('chassis_number')->nullable();
             $table->string('vehicle_photo')->nullable();
             $table->string('vehicle_video')->nullable();
+            $table->string('model_name')->nullable();
 
             $table->timestamps();
 
