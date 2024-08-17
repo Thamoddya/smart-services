@@ -26,6 +26,12 @@ Route::middleware(['auth'])->group(function () {
             Route::get('/customers', [RouterController::class, 'AdminCustomers'])->name('admin.customers');
             Route::get('/vehicles', [RouterController::class, 'AdminVehicles'])->name('admin.vehicles');
             Route::get('/services', [RouterController::class, 'AdminServices'])->name('admin.services');
+            //Our service route
+            Route::get('/our-service', [RouterController::class, 'OurServices'])->name('admin.ourServices');
+
+
+            //Delete our service
+            Route::get('/delete-our-service/{id}', [RouterController::class, 'deleteOurService'])->name('delete-our-service');
         });
     });
 

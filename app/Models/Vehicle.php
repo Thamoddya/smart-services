@@ -25,6 +25,7 @@ class Vehicle extends Model
         'chassis_number',
         'next_service_km',
         'model_name',
+        'color',
     ];
 
     public function type()

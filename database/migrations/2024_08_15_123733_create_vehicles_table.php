@@ -25,6 +25,7 @@ return new class extends Migration {
             $table->string('vehicle_photo')->nullable();
             $table->string('vehicle_video')->nullable();
             $table->string('model_name')->nullable();
+            $table->string('color')->nullable();
 
             $table->timestamps();
 

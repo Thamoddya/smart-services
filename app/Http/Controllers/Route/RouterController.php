@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Route;
 
 use App\Http\Controllers\Controller;
 use App\Models\Customer;
+use App\Models\OurServices;
 use App\Models\ServiceCenter;
 use App\Models\User;
 use App\Models\Vehicle;
@@ -15,6 +16,25 @@ use Illuminate\Support\Facades\Auth;
 class RouterController extends Controller
 {
 
+
+    public function deleteOurService(Request $request)
+    {
+        $ourService = OurServices::find($request->id);
+        if ($ourService) {
+            $ourService->delete();
+        }
+        return redirect()->back();
+    }
+
+    public function OurServices()
+    {
+        $userData = Auth::user();
+        $serviceCenter = ServiceCenter::where('users_id', $userData->id)->first();
+        return view("admin.ourServices", compact([
+            'userData',
+            'serviceCenter'
+        ]));
+    }
 
     public function vehicleType()
     {

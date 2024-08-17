@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreAdminRequest;
 use App\Mail\CustomerWelcomeMail;
 use App\Models\Customer;
+use App\Models\OurServices;
 use App\Models\Service;
 use App\Models\ServiceCenter;
 use App\Models\User;
@@ -17,6 +18,42 @@ use Mail;
 class ApiController extends Controller
 {
 
+    public function StoreOurService(Request $request)
+    {
+        // Define validation rules
+        $rules = [
+            'serviceCenterId' => 'required|exists:service_center,id',
+            'newServiceName' => 'required|string|max:255',
+        ];
+
+        // Validate the incoming request data
+        $validator = \Validator::make($request->all(), $rules);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => 'error',
+                'errors' => $validator->errors()
+            ], 200);
+        }
+
+        try {
+            $service = OurServices::create([
+                'service_centers_id' => $request->serviceCenterId,
+                'service_name' => $request->newServiceName,
+            ]);
+
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Service added successfully',
+                'data' => $service
+            ], 201);
+        } catch (\Exception $e) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'An error occurred while adding the service'
+            ], 500);
+        }
+    }
     public function StoreVehicleType(Request $request)
     {
         // Define validation rules

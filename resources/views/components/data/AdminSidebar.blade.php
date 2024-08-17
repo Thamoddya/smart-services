@@ -43,7 +43,11 @@
             <i class="fas fa-fw fa-cog"></i>
             <span>Services</span></a>
     </li>
-
+    <li class="nav-item {{ Route::currentRouteName() == 'admin.ourServices' ? 'active' : '' }}">
+        <a class="nav-link" href="{{ route('admin.ourServices') }}">
+            <i class="fas fa-fw fa-cog"></i>
+            <span>Our Services</span></a>
+    </li>
 
 
     {{-- <!-- Nav Item - Utilities Collapse Menu -->

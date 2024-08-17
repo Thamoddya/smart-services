@@ -111,7 +111,7 @@
                             <h6 class="wow fadeInUp text-success" data-wow-duration="0.8s" data-wow-delay="0.3s">
                                 <!-- Blinking Icon -->
                                 <i class="fas fa-exclamation-circle blink-icon"></i>
-                                Next Service Mileage: <strong>{{ $vehicle->next_service_km }}</strong>
+                                Next Service Mileage: <strong>{{ $vehicle->next_service_km }} KM</strong>
                             </h6>
                             <ul>
                                 <li class="wow fadeInUp" data-wow-duration="0.8s" data-wow-delay="0.4s">
@@ -122,6 +122,9 @@
                                 </li>
                                 <li class="wow fadeIn Up" data-wow-duration="0.8s" data-wow-delay="0.6s">
                                     MODEL :- <a class="text-secondary">{{ $vehicle->model_name }}</a>
+                                </li>
+                                <li class="wow fadeIn Up" data-wow-duration="0.8s" data-wow-delay="0.7s">
+                                    COLOR :- <a class="text-secondary">{{ $vehicle->color }}</a>
                                 </li>
                             </ul>
                             <ul>
@@ -169,14 +172,9 @@
                         <h2 class="wow fadeInUp" data-wow-duration="0.8s" data-wow-delay="0.1s">Our Services</h2>
                         <div class="mh-about-tag wow fadeInUp" data-wow-duration="0.8s" data-wow-delay="0.3s">
                             <ul>
-                                <li><span>Deep Interior Detailing</span></li>
-                                <li><span>Premium quality cut and polish</span></li>
-                                <li><span>Nano coating </span></li>
-                                <li><span>Rat guard installing </span></li>
-                                <li><span>Lubricant service </span></li>
-                                <li><span>Engine tune up</span></li>
-                                <li><span>Car Wash </span></li>
-                                <li><span>All kind of Vehicle repairs </span></li>
+                                @foreach ($serviceCenter->ourServices as $service)
+                                    <li><span>{{ $service->service_name }}</span></li>
+                                @endforeach
                             </ul>
                         </div>
                     </div>
