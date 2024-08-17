@@ -121,8 +121,9 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary" onclick="addServiceStationCustomer();">Save
+                    <button type="button" id="btnsave" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" id="btnsave2" class="btn btn-primary"
+                        onclick="addServiceStationCustomer();">Save
                         changes</button>
                 </div>
             </div>
@@ -131,6 +132,11 @@
 
     <script>
         function addServiceStationCustomer() {
+            //disable the button after clicking
+            $('#btnsave').prop('disabled', true);
+            $('#btnsave2').prop('disabled', true);
+
+
             var customerName = $('#customerName').val();
             var customerEmail = $('#customerEmail').val();
             var customerPhone = $('#customerPhone').val();
@@ -156,10 +162,14 @@
                         // Display validation errors
                         displayValidationErrors(data.errors);
                         console.log(data.errors);
+                        $('#btnsave').prop('disabled', false);
+                        $('#btnsave2').prop('disabled', false);
 
                     }
                 },
                 error: function(xhr) {
+                    $('#btnsave').prop('disabled', false);
+                    $('#btnsave2').prop('disabled', false);
                     alert('An error occurred: ' + xhr.responseJSON.message);
                 }
             });
