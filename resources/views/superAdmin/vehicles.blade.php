@@ -53,7 +53,6 @@
                             <th>Customer NIC</th>
                             <th>Service Center</th>
                             <th>Added Date</th>
-                            <th>Actions</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -66,17 +65,6 @@
                                 <td>{{ $vehicle->customer->nic }}</td>
                                 <td>{{ $vehicle->serviceCenter->name }}</td>
                                 <td>{{ $vehicle->created_at->format('d/m/Y') }}</td>
-                                <td>
-                                    <a href="#" class="btn btn-primary btn-circle btn-sm">
-                                        <i class="fas fa-eye text-white"></i>
-                                    </a>
-                                    <a href="#" class="btn btn-warning btn-circle btn-sm">
-                                        <i class="fas fa-edit text-white"></i>
-                                    </a>
-                                    <a href="#" class="btn btn-danger btn-circle btn-sm">
-                                        <i class="fas fa-trash text-white"></i>
-                                    </a>
-                                </td>
                             </tr>
                         @endforeach
 

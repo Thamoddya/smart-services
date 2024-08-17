@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Route;
 use App\Http\Controllers\Controller;
 use App\Models\Customer;
 use App\Models\OurServices;
+use App\Models\Service;
 use App\Models\ServiceCenter;
 use App\Models\User;
 use App\Models\Vehicle;
@@ -117,14 +118,9 @@ class RouterController extends Controller
         //Total customers in this month
         $customersInThisMonth = Customer::whereMonth('created_at', date('m'))->count();
 
-        //Get Total sum of full_cost of all services in all service centers in this month
-        $totalRevenue = 0;
-        $services = ServiceCenter::with('services')->get();
-        foreach ($services as $serviceCenter) {
-            foreach ($serviceCenter->services as $service) {
-                $totalRevenue += $service->full_cost;
-            }
-        }
+
+        //Total services count in this month
+        $servicesCount = Service::whereMonth('created_at', date('m'))->count();
 
         //TOtal vehicles in all service centers
         $totalVehicles = Vehicle::count();
@@ -133,8 +129,8 @@ class RouterController extends Controller
             'serviceCenters',
             'serviceCenterCount',
             'customersInThisMonth',
-            'totalRevenue',
-            'totalVehicles'
+            'totalVehicles',
+            'servicesCount'
         ]));
     }
     public function SuperAdminServiceCenters()

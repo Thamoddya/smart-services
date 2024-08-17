@@ -31,7 +31,6 @@
                             <th>Vehicle Type ID</th>
                             <th>Vehicle Type</th>
                             <th>Added Date</th>
-                            <th>Actions</th>
                         </tr>
                     </thead>
                     <tbody>

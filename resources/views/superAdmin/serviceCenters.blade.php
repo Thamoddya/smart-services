@@ -72,7 +72,6 @@
                             <th>Admin Name</th>
                             <th>Email</th>
                             <th>username</th>
-                            <th>Actions</th>
                         </tr>
                     </thead>
                     <tfoot>
@@ -80,7 +79,6 @@
                             <th>Admin Name</th>
                             <th>Email</th>
                             <th>username</th>
-                            <th>Actions</th>
                         </tr>
                     </tfoot>
                     <tbody>
@@ -90,17 +88,6 @@
                                 <td>{{ $admin->name }}</td>
                                 <td>{{ $admin->email }}</td>
                                 <td>{{ $admin->username }}</td>
-                                <td>
-                                    <a href="#" class="btn btn-primary btn-circle btn-sm">
-                                        <i class="fas fa-eye text-white"></i>
-                                    </a>
-                                    <a href="#" class="btn btn-success btn-circle btn-sm">
-                                        <i class="fas fa-edit text-white"></i>
-                                    </a>
-                                    <a href="#" class="btn btn-danger btn-circle btn-sm">
-                                        <i class="fas fa-trash text-white"></i>
-                                    </a>
-                                </td>
                             </tr>
                         @endforeach
 
