@@ -8,6 +8,7 @@ use App\Models\ServiceCenter;
 use App\Models\User;
 use App\Models\Vehicle;
 use App\Models\VehicleType;
+use DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -132,20 +133,36 @@ class RouterController extends Controller
     {
         $userData = Auth::user();
         $serviceCenter = ServiceCenter::where('users_id', $userData->id)->first();
-        $customers = $serviceCenter->customers()->get();
-        $customerCount = $serviceCenter->customers()->count();
-        //Totl customers in this month in this service center
-        $customersInThisMonth = $serviceCenter->customers()->whereMonth('created_at', date('m'))->count();
-        //Get the all services in this service center and calculate the total revenue
-        $services = $serviceCenter->services()->get();
-        $totalRevenue = 0;
-        foreach ($services as $service) {
-            $totalRevenue += $service->full_cost;
+
+        // Get last 5 months' total sum of service cost
+        $monthlyRevenue = [];
+        for ($i = 4; $i >= 0; $i--) {
+            $month = now()->subMonths($i)->month;
+            $year = now()->subMonths($i)->year;
+            $totalForMonth = $serviceCenter->services()
+                ->whereMonth('service_date', $month)
+                ->whereYear('service_date', $year)
+                ->sum('full_cost');
+            $monthlyRevenue[] = $totalForMonth;
         }
 
-        $totalVehiclesinServiceCenter = $serviceCenter->vehicles()->count();
+        // Get all vehicle types and their counts
+        $vehicleTypes = VehicleType::select('vehicle_types.name', DB::raw('count(vehicles.id) as count'))
+            ->join('vehicles', 'vehicles.type_id', '=', 'vehicle_types.id')
+            ->where('vehicles.service_center_id', $serviceCenter->id)
+            ->groupBy('vehicle_types.name')
+            ->get();
 
+        $vehicleTypeLabels = $vehicleTypes->pluck('name');
+        $vehicleTypeCounts = $vehicleTypes->pluck('count');
+
+        $customers = $serviceCenter->customers()->get();
+        $customerCount = $serviceCenter->customers()->count();
+        $customersInThisMonth = $serviceCenter->customers()->whereMonth('created_at', date('m'))->count();
+        $totalRevenue = $serviceCenter->services()->sum('full_cost');
+        $totalVehiclesinServiceCenter = $serviceCenter->vehicles()->count();
         $totalServicesCount = $serviceCenter->services()->count();
+
         return view("admin.index", compact([
             'userData',
             'serviceCenter',
@@ -154,7 +171,10 @@ class RouterController extends Controller
             'customersInThisMonth',
             'totalRevenue',
             'totalServicesCount',
-            'totalVehiclesinServiceCenter'
+            'totalVehiclesinServiceCenter',
+            'monthlyRevenue',
+            'vehicleTypeLabels',
+            'vehicleTypeCounts'
         ]));
     }
     public function AdminCustomers()
