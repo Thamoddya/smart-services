@@ -14,7 +14,6 @@ class Vehicle extends Model
     protected $fillable = [
         'type_id',
         'vehicle_number',
-        'last_service_km',
         'total_servies_count',
         'next_service_date',
         'vehicle_photo',
@@ -23,6 +22,7 @@ class Vehicle extends Model
         'customer_id',
         'vehicle_id',
         'chassis_number',
+        'last_service_km',
         'next_service_km',
         'model_name',
         'color',

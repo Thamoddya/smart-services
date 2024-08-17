@@ -193,7 +193,8 @@
                     datasets: [{
                         data: vehicleTypeCounts,
                         backgroundColor: ['#4e73df', '#1cc88a', '#36b9cc', '#f6c23e',
-                        '#e74a3b'], // Add more colors if needed
+                            '#e74a3b'
+                        ], // Add more colors if needed
                         hoverBackgroundColor: ['#2e59d9', '#17a673', '#2c9faf', '#d4a23b', '#c13a3b'],
                         hoverBorderColor: "rgba(234, 236, 244, 1)",
                     }],
@@ -227,19 +228,19 @@
                         extend: 'csvHtml5',
                         text: '<i class="fa fa-file-csv"></i> CSV',
                         titleAttr: 'Export to CSV',
-                        className: 'btn btn-primary my-2' // Adds Bootstrap primary button styling
+                        className: 'btn btn-primary my-2'
                     },
                     {
                         extend: 'pdfHtml5',
                         text: '<i class="fa fa-file-pdf"></i> PDF',
                         titleAttr: 'Export to PDF',
-                        className: 'btn btn-danger my-2' // Adds Bootstrap danger button styling (red)
+                        className: 'btn btn-danger my-2'
                     },
                     {
                         extend: 'print',
                         text: '<i class="fa fa-print"></i> Print',
                         titleAttr: 'Print',
-                        className: 'btn btn-success my-2' // Adds Bootstrap success button styling (green)
+                        className: 'btn btn-success my-2'
                     }
                 ],
                 "order": [

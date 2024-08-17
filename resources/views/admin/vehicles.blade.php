@@ -141,6 +141,14 @@
                                 <!-- Error message will be appended here -->
                             </div>
                         </div>
+                        <div class="form-group row" id="vehicleColor-group">
+                            <label for="vehicleColor" class="col-sm-3 col-form-label">Vehicle Color</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" id="vehicleColor"
+                                    placeholder="Enter Vehicle Color">
+                                <!-- Error message will be appended here -->
+                            </div>
+                        </div>
                         <div class="form-group" id="vehicleNumber-group">
                             <label for="vehicleNumber">Vehicle Number Plate (Eg:- BDO2763)</label>
                             <input type="text" class="form-control" id="vehicleNumber"
@@ -200,8 +208,8 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary" onclick="addVehicle();">Save
+                    <button type="button" id="btnOne" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" id="btnTwo" class="btn btn-primary" onclick="addVehicle();">Save
                         changes</button>
                 </div>
             </div>
@@ -303,9 +311,15 @@
                         </div>
                         <div class="vehicle-body">
                             <div class="vehicle-info">
-                                <p><strong>V Number:</strong> <p id="modalVehicleNumber"></p></p>
-                                <p><strong>Type:</strong><p id="modalVehicleType"></p></p>
-                                <p><strong>NIC:</strong> <p id="modalNic"></p></p>
+                                <p><strong>V Number:</strong>
+                                <p id="modalVehicleNumber"></p>
+                                </p>
+                                <p><strong>Type:</strong>
+                                <p id="modalVehicleType"></p>
+                                </p>
+                                <p><strong>NIC:</strong>
+                                <p id="modalNic"></p>
+                                </p>
                                 <!-- Add more vehicle details as needed -->
                             </div>
                             <div class="vehicle-qr">
@@ -323,7 +337,7 @@
     </div>
 
     <script>
-        function POPUP_VIEW_VEHICLE_MODAL(vehicleID,VehicleNumber,customerNIC,vehicleType) {
+        function POPUP_VIEW_VEHICLE_MODAL(vehicleID, VehicleNumber, customerNIC, vehicleType) {
             document.getElementById('qrcode').innerHTML = '';
             document.getElementById('VehicleIDNumber').innerText = `Vehicle ID: ${vehicleID}`;
             document.getElementById('modalVehicleNumber').innerText = VehicleNumber;
@@ -383,6 +397,18 @@
         }
 
         function POPUP_ADD_VEHICLEMODAL() {
+            $('#customerNic').val('');
+            $('#vehicleTypeId').empty();
+            $('#vehicleID').val('');
+            $('#vehicleNumber').val('');
+            $('#chassisNumber').val('');
+            $('#lastServiceMilage').val('');
+            $('#nextServiceMilage').val('');
+            $('#modelName').val('');
+            $('#vehicleColor').val('');
+            $('#vehiclePhoto').val('');
+            $('#vehicleVideo').val('');
+
             // Get Vehicle Types
             $.ajax({
                 url: "{{ route('get-vehicle-types') }}",
@@ -416,6 +442,12 @@
         }
 
         function addVehicle() {
+
+            //disable buttons
+            $('#btnTwo').prop('disabled', true);
+            $('#btnOne').prop('disabled', true);
+
+
             var customerNic = $('#customerNic').val();
             var vehicleTypeId = $('#vehicleTypeId').val();
             var vehicleID = $('#vehicleID').val();
@@ -424,6 +456,7 @@
             var lastServiceMilage = $('#lastServiceMilage').val();
             var nextServiceMilage = $('#nextServiceMilage').val();
             var modelName = $('#modelName').val();
+            var vehicleColor = $('#vehicleColor').val();
             var vehiclePhoto = $('#vehiclePhoto')[0].files[0];
             var vehicleVideo = $('#vehicleVideo')[0].files[0];
 
@@ -437,6 +470,7 @@
             formData.append('nextServiceMilage', nextServiceMilage);
             formData.append('cerviceCenterId', '{{ $serviceCenter->id }}');
             formData.append('modelName', modelName);
+            formData.append('vehicleColor', vehicleColor);
 
             if (vehiclePhoto) {
                 formData.append('vehiclePhoto', vehiclePhoto);
@@ -456,10 +490,16 @@
                         window.location.reload();
                     } else if (data.status === 'error') {
                         displayValidationErrors(data.errors);
+                        //enable buttons
+                        $('#btnTwo').prop('disabled', false);
+                        $('#btnOne').prop('disabled', false);
                     }
                 },
                 error: function(xhr) {
                     alert('An error occurred: ' + xhr.responseJSON.message);
+                    //enable buttons
+                    $('#btnTwo').prop('disabled', false);
+                    $('#btnOne').prop('disabled', false);
                 }
             });
         }

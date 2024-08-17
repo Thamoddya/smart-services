@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Route;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreAdminRequest;
 use App\Mail\CustomerWelcomeMail;
+use App\Mail\VehicleAddedMail;
 use App\Models\Customer;
 use App\Models\OurServices;
 use App\Models\Service;
@@ -238,21 +239,20 @@ class ApiController extends Controller
     public function StoreVehicle(Request $request)
     {
 
-
         // Validation rules
         $rules = [
             'customerNic' => 'required|string|max:255|exists:customers,nic',
             'vehicleTypeId' => 'required|exists:vehicle_types,id',
             'vehicleID' => 'required|string|max:255|unique:vehicles,vehicle_id',
-            'vehicleNumber' => 'required|string|max:255',
-            'chassisNumber' => 'required|string|max:255',
+            'vehicleNumber' => 'required|string|max:255|unique:vehicles,vehicle_number',
+            'chassisNumber' => 'required|string|max:255|unique:vehicles,chassis_number',
             'lastServiceMilage' => 'nullable|integer',
             'nextServiceMilage' => 'nullable|integer',
             'vehiclePhoto' => 'required|image', // 2MB Max
             'vehicleVideo' => 'sometimes|mimetypes:video/avi,video/mpeg,video/mp4|max:10240', // 10MB Max
             'cerviceCenterId' => 'required|exists:service_center,id',
             'modelName' => 'required|string|max:255',
-
+            'vehicleColor' => 'required|string|max:255',
         ];
 
         //Check if the customer NIC is registed under the service center
@@ -303,8 +303,11 @@ class ApiController extends Controller
                 'vehicle_video' => $vehicleVideoPath,
                 'service_center_id' => $request->cerviceCenterId,
                 'model_name' => $request->modelName,
+                'color' => $request->vehicleColor,
             ]);
 
+            // Send email to the customer
+            Mail::to($customer->email)->send(new VehicleAddedMail($vehicle, $customer));
             // Return success response
             return response()->json([
                 'status' => 'success',
@@ -314,8 +317,8 @@ class ApiController extends Controller
         } catch (\Exception $e) {
             return response()->json([
                 'status' => 'error',
-                'message' => 'An error occurred while adding the vehicle',
-            ], 500);
+                'message' => $e,
+            ], 200);
         }
     }
     public function StoreServiceCenter(Request $request)
