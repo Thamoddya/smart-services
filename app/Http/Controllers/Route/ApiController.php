@@ -425,8 +425,8 @@ class ApiController extends Controller
                 'nic' => $request->customerNIC,
             ]);
 
-            // Dispatch email to the queue
-            \App\Jobs\SendCustomerWelcomeEmail::dispatch($customer);
+            // Send email to the customer
+            Mail::to($customer->email)->send(new CustomerWelcomeMail($customer));
 
             // Return success response
             return response()->json([
