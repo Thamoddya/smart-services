@@ -7,11 +7,25 @@ use App\Models\Customer;
 use App\Models\ServiceCenter;
 use App\Models\User;
 use App\Models\Vehicle;
+use App\Models\VehicleType;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class RouterController extends Controller
 {
+
+
+    public function vehicleType()
+    {
+
+        $userData = Auth::user();
+        $vehicleTypes = VehicleType::all();
+
+        return view('superAdmin.vehicleType', compact([
+            'userData',
+            'vehicleTypes'
+        ]));
+    }
 
     public function AdminServices()
     {

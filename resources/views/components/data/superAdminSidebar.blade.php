@@ -37,7 +37,11 @@
             <i class="fas fa-fw fa-car"></i>
             <span>Vehicles</span></a>
     </li>
-
+    <li class="nav-item {{ Route::currentRouteName() == 'superAdmin.vehicleType' ? 'active' : '' }}">
+        <a class="nav-link" href="{{ route('superAdmin.vehicleType') }}">
+            <i class="fas fa-fw fa-car"></i>
+            <span>Vheicle Type</span></a>
+    </li>
     {{-- <!-- Nav Item - Utilities Collapse Menu -->
     <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"

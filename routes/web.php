@@ -16,6 +16,7 @@ Route::middleware(['auth'])->group(function () {
             Route::get('/', [RouterController::class, 'SuperAdminIndex'])->name('superAdmin.index');
             Route::get('/service-centers', [RouterController::class, 'SuperAdminServiceCenters'])->name('superAdmin.serviceCenters');
             Route::get('/vehicles', [RouterController::class, 'SuperAdminVehicles'])->name('superAdmin.vehicles');
+            Route::get('/vehicleType', [RouterController::class, 'vehicleType'])->name('superAdmin.vehicleType');
         });
     });
 

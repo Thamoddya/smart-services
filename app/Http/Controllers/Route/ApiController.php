@@ -15,6 +15,40 @@ use Illuminate\Http\Request;
 class ApiController extends Controller
 {
 
+    public function StoreVehicleType (Request $request)
+    {
+        // Define validation rules
+        $rules = [
+            'vehicleTypeName' => 'required|string|max:255|unique:vehicle_types,name',
+        ];
+
+        // Validate the incoming request data
+        $validator = \Validator::make($request->all(), $rules);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => 'error',
+                'errors' => $validator->errors()
+            ], 200);
+        }
+
+        try {
+            $vehicleType = VehicleType::create([
+                'name' => $request->vehicleTypeName,
+            ]);
+
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Vehicle type added successfully',
+                'data' => $vehicleType
+            ], 201);
+        } catch (\Exception $e) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'An error occurred while adding the vehicle type'
+            ], 500);
+        }
+    }
     public function UpdateServiceCenter(Request $request)
     {
         // Define validation rules
