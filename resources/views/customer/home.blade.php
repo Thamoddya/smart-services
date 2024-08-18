@@ -70,12 +70,12 @@
 <body class="dark-vertion home-video black-bg">
 
     <!-- Start Loader -->
-    {{-- <div class="section-loader">
+    <div class="section-loader">
         <div class="loader">
             <div></div>
             <div></div>
         </div>
-    </div> --}}
+    </div>
     <!-- End Loader -->
 
     <section class="mh-home image-bg relative" id="mh-home">
@@ -84,7 +84,7 @@
                 Video section
                 -->
             <div class="section-video">
-                <video autoplay="" class="bgvid" loop="" muted="">
+                <video autoplay="true" class="bgvid" loop="" muted="">
                     <!-- <source src="video/video.webm" type="video/webm"> -->
                     @if ($vehicle->vehicle_video)
                         <source src="{{ asset('storage/' . $vehicle->vehicle_video) }}" type="video/mp4">
@@ -379,7 +379,7 @@
     <script src="{{ asset('customer/plugins/js/isotope.pkgd.js') }}"></script>
     <script src="{{ asset('customer/plugins/js/packery-mode.pkgd.js') }}"></script>
     <!-- Custom Scripts-->
-    <script src="{{ asset('js/custom-scripts.js') }}"></script>
+    <script src="{{ asset('customer/js/custom-scripts.js') }}"></script>
 
 
 
