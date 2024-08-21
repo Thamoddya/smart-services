@@ -378,6 +378,7 @@ class ApiController extends Controller
     public function StoreAdmin(Request $request)
     {
 
+        
         // Define validation rules
         $rules = [
             'name' => 'required|string|max:255',
