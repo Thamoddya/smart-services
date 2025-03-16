@@ -55,6 +55,7 @@ class ApiController extends Controller
             ], 500);
         }
     }
+
     public function StoreVehicleType(Request $request)
     {
         // Define validation rules
@@ -89,6 +90,7 @@ class ApiController extends Controller
             ], 500);
         }
     }
+
     public function UpdateServiceCenter(Request $request)
     {
         // Define validation rules
@@ -99,7 +101,7 @@ class ApiController extends Controller
             'editCenterEmail' => 'sometimes|email|unique:service_center,email,' . $request->serviceCenterId,
             'editCenterAddress' => 'required|string|max:255',
             'editTotal_access_vehicles' => 'sometimes|integer',
-            // 'logo' => 'sometimes|file|mimes:jpeg,png,jpg,gif|max:2048' // Validate logo as an image file
+            'logo' => 'sometimes|file|mimes:jpeg,png,jpg,gif|max:2048' // Uncommented the logo validation
         ];
 
         // Validate the incoming request data
@@ -123,12 +125,16 @@ class ApiController extends Controller
         }
 
         // Handle the file upload
-        // if ($request->hasFile('logo')) {
-        //     $logo = $request->file('logo');
-        //     $logoPath = $logo->store('logos', 'public'); // Store the file in the 'logos' directory in public storage
-        // } else {
-        //     $logoPath = $serviceCenter->logo_path;
-        // }
+        if ($request->hasFile('logo')) {
+            // Delete the old logo if it exists
+            if ($serviceCenter->logo_path && \Storage::disk('public')->exists($serviceCenter->logo_path)) {
+                \Storage::disk('public')->delete($serviceCenter->logo_path);
+            }
+
+            $logo = $request->file('logo');
+            $logoPath = $logo->store('logos', 'public'); // Store the file in the 'logos' directory in public storage
+            $serviceCenter->logo_path = $logoPath;
+        }
 
         try {
             $serviceCenter->name = $request->editCenterName;
@@ -136,7 +142,7 @@ class ApiController extends Controller
             $serviceCenter->mobile = $request->editCenterMobile;
             $serviceCenter->email = $request->editCenterEmail;
             $serviceCenter->total_access_vehicles = $request->editTotal_access_vehicles;
-            // $serviceCenter->logo_path = $logoPath;
+            // No need to set logo_path here as it's already set above if a new file was uploaded
             $serviceCenter->save();
 
             return response()->json([
@@ -147,10 +153,11 @@ class ApiController extends Controller
         } catch (\Exception $e) {
             return response()->json([
                 'status' => 'error',
-                'message' => 'An error occurred while updating the service center'
+                'message' => 'An error occurred while updating the service center: ' . $e->getMessage()
             ], 500);
         }
     }
+
     public function GetServiceCenterById()
     {
         $serviceCenterId = request('serviceCenterId');
@@ -236,6 +243,7 @@ class ApiController extends Controller
         }
 
     }
+
     public function StoreVehicle(Request $request)
     {
 
@@ -321,6 +329,7 @@ class ApiController extends Controller
             ], 200);
         }
     }
+
     public function StoreServiceCenter(Request $request)
     {
         // Define validation rules
@@ -375,10 +384,11 @@ class ApiController extends Controller
             ], 500);
         }
     }
+
     public function StoreAdmin(Request $request)
     {
 
-        
+
         // Define validation rules
         $rules = [
             'name' => 'required|string|max:255',

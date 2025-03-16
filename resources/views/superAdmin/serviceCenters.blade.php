@@ -20,7 +20,8 @@
                             </div>
                             <div class="row no-gutters align-items-center">
                                 <div class="col-auto">
-                                    <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">{{ $serviceCenterCount }}</div>
+                                    <div
+                                        class="h5 mb-0 mr-3 font-weight-bold text-gray-800">{{ $serviceCenterCount }}</div>
                                 </div>
 
                             </div>
@@ -39,7 +40,7 @@
     <div class="row my-2">
         <div class="col-xl-12 col-lg-7">
             <a type="button" data-toggle="modal" data-target="#addServiceCenterAdminModal"
-                class="btn btn-success btn-icon-split">
+               class="btn btn-success btn-icon-split">
                 <span class="icon text-white-50">
                     <i class="fas fa-plus"></i>
                 </span>
@@ -68,28 +69,28 @@
             <div class="table-responsive">
                 <table class="table table-bordered" id="adminsTable" width="100%" cellspacing="0">
                     <thead>
-                        <tr>
-                            <th>Admin Name</th>
-                            <th>Email</th>
-                            <th>username</th>
-                        </tr>
+                    <tr>
+                        <th>Admin Name</th>
+                        <th>Email</th>
+                        <th>username</th>
+                    </tr>
                     </thead>
                     <tfoot>
-                        <tr>
-                            <th>Admin Name</th>
-                            <th>Email</th>
-                            <th>username</th>
-                        </tr>
+                    <tr>
+                        <th>Admin Name</th>
+                        <th>Email</th>
+                        <th>username</th>
+                    </tr>
                     </tfoot>
                     <tbody>
 
-                        @foreach ($serviceAdmins as $admin)
-                            <tr>
-                                <td>{{ $admin->name }}</td>
-                                <td>{{ $admin->email }}</td>
-                                <td>{{ $admin->username }}</td>
-                            </tr>
-                        @endforeach
+                    @foreach ($serviceAdmins as $admin)
+                        <tr>
+                            <td>{{ $admin->name }}</td>
+                            <td>{{ $admin->email }}</td>
+                            <td>{{ $admin->username }}</td>
+                        </tr>
+                    @endforeach
 
                     </tbody>
                 </table>
@@ -107,48 +108,48 @@
             <div class="table-responsive">
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                     <thead>
-                        <tr>
-                            <th></th>
-                            <th>Admin Name</th>
-                            <th>Service Center Name</th>
-                            <th>Mobile</th>
-                            <th>Email</th>
-                            <th>Vehicles</th>
-                            <th>Earnings</th>
-                            <th>Actions</th>
-                        </tr>
+                    <tr>
+                        <th></th>
+                        <th>Admin Name</th>
+                        <th>Service Center Name</th>
+                        <th>Mobile</th>
+                        <th>Email</th>
+                        <th>Vehicles</th>
+                        <th>Earnings</th>
+                        <th>Actions</th>
+                    </tr>
                     </thead>
                     <tfoot>
-                        <tr>
-                            <th></th>
-                            <th>Admin Name</th>
-                            <th>Service Center Name</th>
-                            <th>Mobile</th>
-                            <th>Email</th>
-                            <th>Vehicles</th>
-                            <th>Earnings</th>
-                            <th>Actions</th>
-                        </tr>
+                    <tr>
+                        <th></th>
+                        <th>Admin Name</th>
+                        <th>Service Center Name</th>
+                        <th>Mobile</th>
+                        <th>Email</th>
+                        <th>Vehicles</th>
+                        <th>Earnings</th>
+                        <th>Actions</th>
+                    </tr>
                     </tfoot>
                     <tbody>
-                        @foreach ($serviceCenters as $serviceCenter)
-                            <tr>
-                                <td><img src="{{ asset('storage/' . $serviceCenter->logo_path) }}" alt="Logo"
-                                        style="width: 50px; height: 50px;"></td>
-                                <td>{{ $serviceCenter->user->name }}</td>
-                                <td>{{ $serviceCenter->name }}</td>
-                                <td>{{ $serviceCenter->mobile }}</td>
-                                <td>{{ $serviceCenter->email }}</td>
-                                <td>{{ $serviceCenter->total_access_vehicles }}</td>
-                                <td>Rs.{{ $serviceCenter->totalRevenue() }}</td>
-                                <td>
-                                    <button onclick="POPUP_editServiceCenterModal({{ $serviceCenter->id }});"
+                    @foreach ($serviceCenters as $serviceCenter)
+                        <tr>
+                            <td><img src="{{ asset('storage/' . $serviceCenter->logo_path) }}" alt="Logo"
+                                     style="width: 50px; height: 50px;"></td>
+                            <td>{{ $serviceCenter->user->name }}</td>
+                            <td>{{ $serviceCenter->name }}</td>
+                            <td>{{ $serviceCenter->mobile }}</td>
+                            <td>{{ $serviceCenter->email }}</td>
+                            <td>{{ $serviceCenter->total_access_vehicles }}</td>
+                            <td>Rs.{{ $serviceCenter->totalRevenue() }}</td>
+                            <td>
+                                <button onclick="POPUP_editServiceCenterModal({{ $serviceCenter->id }});"
                                         class="btn btn-primary btn-sm">
-                                        EDIT
-                                    </button>
-                                </td>
-                            </tr>
-                        @endforeach
+                                    EDIT
+                                </button>
+                            </td>
+                        </tr>
+                    @endforeach
                     </tbody>
                 </table>
             </div>
@@ -157,7 +158,7 @@
 
     {{-- Add Service Center Admin Modal --}}
     <div class="modal  fade" id="addServiceCenterAdminModal" tabindex="-1" role="dialog"
-        aria-labelledby="addServiceCenterAdminModalLabel" aria-hidden="true">
+         aria-labelledby="addServiceCenterAdminModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -207,7 +208,7 @@
     {{-- Add Service Center Model --}}
 
     <div class="modal  fade" id="addServiceCenterModal" tabindex="-1" role="dialog"
-        aria-labelledby="addServiceCenterModalLabel" aria-hidden="true">
+         aria-labelledby="addServiceCenterModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -233,7 +234,7 @@
                             <label for="serviceCenterName" class="col-sm-3 col-form-label">Service Center Name</label>
                             <div class="col-sm-9">
                                 <input type="text" class="form-control" id="serviceCenterName"
-                                    placeholder="Service Center Name">
+                                       placeholder="Service Center Name">
                                 <!-- Error message will be appended here -->
                             </div>
                         </div>
@@ -242,7 +243,7 @@
                             <label for="serviceCenterMobile" class="col-sm-3 col-form-label">Mobile</label>
                             <div class="col-sm-9">
                                 <input type="text" class="form-control" id="serviceCenterMobile"
-                                    placeholder="Mobile">
+                                       placeholder="Mobile">
                                 <!-- Error message will be appended here -->
                             </div>
                         </div>
@@ -259,7 +260,7 @@
                             <label for="serviceCenterAddress" class="col-sm-3 col-form-label">Address</label>
                             <div class="col-sm-9">
                                 <input type="text" class="form-control" id="serviceCenterAddress"
-                                    placeholder="Address">
+                                       placeholder="Address">
                                 <!-- Error message will be appended here -->
                             </div>
                         </div>
@@ -269,7 +270,7 @@
                                 Vehicles</label>
                             <div class="col-sm-9">
                                 <input type="number" class="form-control" id="total_access_vehicles"
-                                    placeholder="Total Access Vehicles">
+                                       placeholder="Total Access Vehicles">
                                 <!-- Error message will be appended here -->
                             </div>
                         </div>
@@ -285,7 +286,8 @@
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                         <button type="button" class="btn btn-primary" onclick="StoreServiceCenter()">Add Service
-                            Center</button>
+                            Center
+                        </button>
                     </div>
                 </div>
             </div>
@@ -295,7 +297,7 @@
 
     {{-- Edit Service Center Modal --}}
     <div class="modal  fade" id="editServiceCenterModal" tabindex="-1" role="dialog"
-        aria-labelledby="editServiceCenterModalLabel" aria-hidden="true">
+         aria-labelledby="editServiceCenterModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -314,7 +316,7 @@
                             <label for="editCenterName" class="col-sm-3 col-form-label">Service Center Name</label>
                             <div class="col-sm-9">
                                 <input type="text" class="form-control" id="editCenterName"
-                                    placeholder="Service Center Name">
+                                       placeholder="Service Center Name">
                                 <!-- Error message will be appended here -->
                             </div>
                         </div>
@@ -350,14 +352,29 @@
                                 Vehicles</label>
                             <div class="col-sm-9">
                                 <input type="number" class="form-control" id="editTotal_access_vehicles"
-                                    placeholder="Total Access Vehicles">
+                                       placeholder="Total Access Vehicles">
+                                <!-- Error message will be appended here -->
+                            </div>
+                        </div>
+
+                        <div class="form-group row" id="editLogo-group">
+                            <label for="editLogo" class="col-sm-3 col-form-label">Logo</label>
+                            <div class="col-sm-9">
+                                <input type="file" class="form-control" id="editLogo" placeholder="Logo">
+                                <!-- Current logo preview -->
+                                <div class="mt-2">
+                                    <small>Current logo:</small>
+                                    <img src="" id="currentLogoPreview" alt="Current Logo"
+                                         style="max-width: 100px; max-height: 100px;">
+                                </div>
                                 <!-- Error message will be appended here -->
                             </div>
                         </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary" onclick="UpdateServiceCenter();">Save changes</button>
+                        <button type="button" class="btn btn-primary" onclick="UpdateServiceCenter();">Save changes
+                        </button>
                     </div>
                 </div>
             </div>
@@ -373,19 +390,29 @@
             var editCenterEmail = $('#editCenterEmail').val();
             var editCenterAddress = $('#editCenterAddress').val();
             var editTotal_access_vehicles = $('#editTotal_access_vehicles').val();
+            var editLogo = $('#editLogo')[0].files[0]; // Get the selected file
+
+            // Create a FormData object to handle the file upload
+            let formData = new FormData();
+            formData.append('serviceCenterId', serviceCenterId);
+            formData.append('editCenterName', editCenterName);
+            formData.append('editCenterMobile', editCenterMobile);
+            formData.append('editCenterEmail', editCenterEmail);
+            formData.append('editCenterAddress', editCenterAddress);
+            formData.append('editTotal_access_vehicles', editTotal_access_vehicles);
+
+            // Only append logo if one was selected
+            if (editLogo) {
+                formData.append('logo', editLogo);
+            }
 
             $.ajax({
-                url: '{{ route('update-service-center') }}',
+                url: '{{ route("update-service-center") }}',
                 type: 'POST',
-                data: {
-                    serviceCenterId: serviceCenterId,
-                    editCenterName: editCenterName,
-                    editCenterMobile: editCenterMobile,
-                    editCenterEmail: editCenterEmail,
-                    editCenterAddress: editCenterAddress,
-                    editTotal_access_vehicles: editTotal_access_vehicles
-                },
-                success: function(response) {
+                data: formData,
+                contentType: false, // Necessary for file upload
+                processData: false, // Necessary for file upload
+                success: function (response) {
                     if (response.status === 'success') {
                         window.location.reload();
                     } else {
@@ -393,29 +420,30 @@
                         displayServicecenterErrors(response.errors);
                     }
                 },
-                error: function(xhr) {
+                error: function (xhr) {
                     // Handle server errors
                     alert('An error occurred: ' + xhr.responseJSON.message);
                 }
             });
         }
 
-
         function POPUP_editServiceCenterModal(serviceCenterId) {
-
+            // Reset form fields
             $('#editCenterName').val(null);
             $('#editCenterMobile').val(null);
             $('#editCenterEmail').val(null);
             $('#editCenterAddress').val(null);
             $('#editTotal_access_vehicles').val(null);
             $('#EditserviceCenterId').val(null);
+            $('#currentLogoPreview').attr('src', '');
+
             $.ajax({
-                url: '{{ route('get-service-center') }}',
+                url: '{{ route("get-service-center") }}',
                 type: 'POST',
                 data: {
                     serviceCenterId: serviceCenterId
                 },
-                success: function(response) {
+                success: function (response) {
                     if (response.status === 'success') {
                         var serviceCenter = response.data;
                         $('#editCenterName').val(serviceCenter.name);
@@ -424,11 +452,16 @@
                         $('#editCenterAddress').val(serviceCenter.address);
                         $('#editTotal_access_vehicles').val(serviceCenter.total_access_vehicles);
                         $('#EditserviceCenterId').val(serviceCenter.id);
+
+                        // Show current logo
+                        if (serviceCenter.logo_path) {
+                            $('#currentLogoPreview').attr('src', '{{ asset("storage") }}/' + serviceCenter.logo_path);
+                        }
                     } else {
                         alert('An error occurred: ' + response.message);
                     }
                 },
-                error: function(xhr) {
+                error: function (xhr) {
                     alert('An error occurred: ' + xhr.responseJSON.message);
                 }
             });
@@ -461,7 +494,7 @@
                 data: formData,
                 contentType: false, // Necessary for file upload
                 processData: false, // Necessary for file upload
-                success: function(response) {
+                success: function (response) {
                     if (response.status === 'success') {
                         window.location.reload();
                     } else {
@@ -470,7 +503,7 @@
                         console.log(response.errors);
                     }
                 },
-                error: function(xhr) {
+                error: function (xhr) {
                     // Handle server errors
                     alert('An error occurred: ' + xhr.responseJSON.message);
                 }
@@ -483,7 +516,7 @@
             $('.form-group .text-danger').remove();
 
             // Display new errors
-            $.each(errors, function(key, value) {
+            $.each(errors, function (key, value) {
                 // Get the input element
                 var input = $('#' + key);
 
@@ -504,13 +537,13 @@
             $.ajax({
                 url: '{{ route('get-admins') }}',
                 type: 'POST',
-                success: function(response) {
+                success: function (response) {
                     if (response.status === 'success') {
                         var admins = response.data;
                         var adminSelect = $('#adminSelect');
                         adminSelect.empty();
                         adminSelect.append('<option value="0">Select Admin</option>');
-                        $.each(admins, function(index, admin) {
+                        $.each(admins, function (index, admin) {
                             adminSelect.append('<option value="' + admin.id + '">' + admin.name +
                                 '</option>');
                         });
@@ -519,7 +552,7 @@
                         alert('An error occurred: ' + response.message);
                     }
                 },
-                error: function(xhr) {
+                error: function (xhr) {
                     alert('An error occurred: ' + xhr.responseJSON.message);
                 }
             });
@@ -542,7 +575,7 @@
                 url: '{{ route('store-admin') }}',
                 type: 'POST',
                 data: data,
-                success: function(response) {
+                success: function (response) {
                     if (response.status === 'success') {
                         window.location.reload();
                     } else {
@@ -550,7 +583,7 @@
                         displayErrors(response.errors);
                     }
                 },
-                error: function(xhr) {
+                error: function (xhr) {
                     // Handle server errors
                     alert('An error occurred: ' + xhr.responseJSON.message);
                 }
@@ -563,7 +596,7 @@
             $('.form-group .text-danger').remove();
 
             // Display new errors
-            $.each(errors, function(key, value) {
+            $.each(errors, function (key, value) {
                 var input = $('#' + key);
                 input.closest('.form-group').addClass('has-error');
                 var errorHtml = '<span class="text-danger">' + value.join(', ') + '</span>';
